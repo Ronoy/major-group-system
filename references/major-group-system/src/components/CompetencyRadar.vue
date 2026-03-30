@@ -18,12 +18,14 @@ import { SankeyChart } from 'echarts/charts'
 import { TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
-import type { JobMatch } from '../data/majors'
+import type { JobMatch, Course } from '../data/majors'
+import { courseJobLinkMap } from '../data/majors'
 
 use([SankeyChart, TooltipComponent, CanvasRenderer])
 
 const props = defineProps<{
   jobs: JobMatch[]
+  courses: Course[]
   majorName: string
 }>()
 
@@ -43,8 +45,15 @@ const columns = [
   { name: '专业', color: colColors['专业'] },
 ]
 
-// 岗位所属产业（按 category 归类）
+// 岗位类目 → 所属产业
 const categoryToIndustry: Record<string, string> = {
+  'Web前端开发': '互联网应用开发',
+  'Java后端开发': '企业软件服务',
+  '移动应用开发': '移动互联网',
+  'DevOps运维': '云计算与基础设施',
+  '软件测试': '软件质量服务',
+  '数据开发': '大数据与AI',
+  // 兼容旧数据
   '技术开发': '智能终端制造',
   '硬件设计': 'PCB与电路板',
   '质量检测': '电子检测服务',
@@ -54,26 +63,20 @@ const categoryToIndustry: Record<string, string> = {
   '人工智能': 'AI与边缘计算',
 }
 
-// 产业所属产业链
+// 产业 → 所属产业链
 const industryToChain: Record<string, string> = {
+  '互联网应用开发': '信息技术服务',
+  '企业软件服务': '信息技术服务',
+  '移动互联网': '信息技术服务',
+  '云计算与基础设施': '信息技术服务',
+  '软件质量服务': '信息技术服务',
+  '大数据与AI': '信息技术服务',
   '智能终端制造': '电子信息制造',
   'PCB与电路板': '电子信息制造',
   '电子检测服务': '电子信息制造',
   '物联网应用': '信息技术服务',
   '系统集成服务': '信息技术服务',
   'AI与边缘计算': '信息技术服务',
-}
-
-// 岗位 → 核心课程
-const jobCourseMap: Record<string, string[]> = {
-  '嵌入式软件工程师': ['单片机原理与应用', '嵌入式系统开发', 'C语言程序设计'],
-  'PCB设计工程师': ['PCB设计与制作', '模拟电子技术', '电路分析基础'],
-  '电子产品测试工程师': ['传感器与检测技术', '电子产品生产工艺'],
-  '物联网系统集成工程师': ['通信原理与应用', '物联网系统集成', '传感器与检测技术'],
-  'FPGA开发工程师': ['数字电子技术', 'EDA技术与FPGA应用'],
-  '智能终端产品经理': ['电子产品生产工艺', '创新创业实践'],
-  '电子设备运维工程师': ['电路分析基础', '通信原理与应用'],
-  'AI边缘计算工程师': ['AI边缘计算实训', 'Python与数据分析', '机器学习与智能算法'],
 }
 
 const chartOption = computed(() => {
@@ -90,6 +93,24 @@ const chartOption = computed(() => {
     })
   }
 
+  // 构建课程ID→名称的映射
+  const courseNameMap = new Map<string, string>()
+  for (const c of props.courses) {
+    courseNameMap.set(c.id, c.name)
+  }
+
+  // 从 courseJobLinkMap 反向构建 岗位名 → 课程名列表
+  const jobToCoursesMap = new Map<string, string[]>()
+  for (const [courseId, links] of Object.entries(courseJobLinkMap)) {
+    const courseName = courseNameMap.get(courseId)
+    if (!courseName) continue
+    for (const link of links) {
+      if (!jobToCoursesMap.has(link.jobName)) jobToCoursesMap.set(link.jobName, [])
+      const list = jobToCoursesMap.get(link.jobName)!
+      if (!list.includes(courseName)) list.push(courseName)
+    }
+  }
+
   addNode(props.majorName, '专业')
 
   const usedChains = new Set<string>()
@@ -102,14 +123,15 @@ const chartOption = computed(() => {
     addNode(industry, '产业')
     links.push({ source: industry, target: job.name, value: 2 })
 
-    const chain = industryToChain[industry] || '电子信息制造'
+    const chain = industryToChain[industry] || '信息技术服务'
     if (!usedChains.has(`${chain}-${industry}`)) {
       addNode(chain, '产业链')
       links.push({ source: chain, target: industry, value: 2 })
       usedChains.add(`${chain}-${industry}`)
     }
 
-    const courses = jobCourseMap[job.name] || job.skills.slice(0, 2)
+    // 从 courseJobLinkMap 动态获取课程，保持与课-岗关联图谱一致
+    const courses = jobToCoursesMap.get(job.name) || job.skills.slice(0, 2)
     for (const course of courses) {
       addNode(course, '课程')
       courseSet.add(course)

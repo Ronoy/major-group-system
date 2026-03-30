@@ -7,13 +7,13 @@ All TypeScript interfaces for `src/data/majors.ts`. Every export must conform to
 ```typescript
 export interface MajorInfo {
   id: string
-  code: string          // e.g. '510101'
-  name: string          // e.g. '电子信息工程技术'
+  code: string          // e.g. '610205'
+  name: string          // e.g. '软件技术'
   level: string         // e.g. '高职(专科)'
   duration: string      // e.g. '3年'
-  college: string       // e.g. '电子信息工程学院'
+  college: string       // e.g. '人工智能学院'
   group: string         // e.g. '电子与信息大类'
-  location: string      // e.g. '江西赣州'
+  location: string      // e.g. '深圳'
   description: string   // 2-3 sentence overview
   enrollment: number    // students per year
   established: string   // e.g. '2005'
@@ -35,8 +35,8 @@ export interface JobProfile {
 
 export interface JobMatch {
   id: string            // e.g. 'j1'
-  name: string          // e.g. '嵌入式软件工程师'
-  category: string      // e.g. '嵌入式开发'
+  name: string          // e.g. 'Web前端开发工程师'
+  category: string      // e.g. '前端开发'
   matchRate: number     // 0-100 percentage
   salaryRange: string   // e.g. '8-15K'
   demand: '高' | '中' | '低'
@@ -115,19 +115,19 @@ export interface NavGroup {
 // College → Majors hierarchy for sidebar
 export interface College {
   id: string    // e.g. 'c1'
-  name: string  // e.g. '电子信息工程学院'
+  name: string  // e.g. '人工智能学院'
   majors: { id: string; name: string }[]
 }
 
 export const colleges: College[] = [
   {
     id: 'c1',
-    name: '电子信息工程学院',
+    name: '人工智能学院',
     majors: [
-      { id: 'm1', name: '电子信息工程技术' },
-      { id: 'm2', name: '物联网应用技术' },
-      { id: 'm3', name: '通信技术' },
-      { id: 'm4', name: '智能产品开发与应用' },
+      { id: 'm1', name: '软件技术' },
+      { id: 'm2', name: '大数据技术' },
+      { id: 'm3', name: '云计算技术应用' },
+      { id: 'm4', name: '人工智能技术应用' },
     ],
   },
   // ... more colleges
@@ -146,7 +146,7 @@ export const createdCourseIds = ref<Set<string>>(new Set(['cr1', 'cr2', ...]))
 export const pendingCourses = ref<Course[]>([
   {
     id: 'pending-1',
-    name: 'AI视觉检测技术',
+    name: 'LangChain应用开发',
     category: 'AI实训课',
     credits: 3,
     hours: 48,
@@ -199,10 +199,10 @@ When populating course prerequisites, follow these patterns:
 - **Semester 5 courses**: Depend on core courses from semester 3-4
 - **Semester 6 (capstone/internship)**: Depend on advanced semester 5 courses
 
-Example prerequisite chain for electronics major:
+Example prerequisite chain for software major:
 ```
-cr1 (电路分析, S1) ──→ cr2 (模拟电子, S2) ──→ cr7 (PCB设计, S3) ──→ cr10 (生产工艺, S4)
-                  ──→ cr3 (数字电子, S2) ──→ cr6 (单片机, S3) ──→ cr9 (嵌入式, S4) ──→ cr14 (AI边缘, S5)
-cr4 (C语言, S1) ──→ cr6 (单片机, S3)
-              ──→ cr12 (Python, S4) ──→ cr13 (机器学习, S5) ──→ cr14 (AI边缘, S5)
+cr1 (程序设计基础, S1) ──→ cr5 (数据结构, S2) ──→ cr9 (Java企业开发, S3) ──→ cr14 (微服务架构, S5)
+                       ──→ cr6 (Web前端开发, S2) ──→ cr10 (前端框架实战, S3) ──→ cr15 (全栈项目实战, S5)
+cr2 (计算机网络, S1) ──→ cr7 (Linux系统, S2) ──→ cr11 (云计算, S4) ──→ cr16 (DevOps, S5)
+cr3 (数据库基础, S1) ──→ cr8 (Python, S2) ──→ cr12 (数据分析, S4) ──→ cr13 (机器学习, S5)
 ```

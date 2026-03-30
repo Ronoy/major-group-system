@@ -15,6 +15,11 @@
           </el-tag>
         </div>
         <div class="page-header__links">
+          <button class="header-link" @click="teamVisible = true">
+            <Users :size="14" :stroke-width="2" />
+            建设团队
+            <span class="header-link__badge">{{ teamCount }}</span>
+          </button>
           <a
             v-if="majorInfo.trainingPlanUrl"
             :href="majorInfo.trainingPlanUrl"
@@ -56,7 +61,7 @@
           </button>
         </div>
       </div>
-      <CompetencyRadar :jobs="jobs" :major-name="majorInfo.name" />
+      <CompetencyRadar :jobs="jobs" :courses="courses" :major-name="majorInfo.name" />
     </div>
 
     <!-- 课-岗关联图谱弹窗 -->
@@ -102,6 +107,9 @@
     </div>
   </div>
 
+  <!-- 建设团队弹窗 -->
+  <TeamManagement v-model="teamVisible" />
+
   <!-- 专业岗位图谱全屏视图 -->
   <MajorAtlasView
     v-if="atlasVisible && majorInfo"
@@ -126,6 +134,7 @@ import {
   ChevronRight,
   CircleDot,
   X,
+  Users,
 } from 'lucide-vue-next'
 import { ElMessage } from 'element-plus'
 import { majorInfoMap, jobMatchMap, courseMap, colleges } from '../data/majors'
@@ -137,11 +146,14 @@ import CourseJobChord from './CourseJobChord.vue'
 import CourseMap from './CourseMap.vue'
 import SectionTitle from './SectionTitle.vue'
 import MajorAtlasView from './MajorAtlasView.vue'
+import TeamManagement from './TeamManagement.vue'
 
 const props = defineProps<{ majorId: string }>()
 
 const chordVisible = ref(false)
 const atlasVisible = ref(false)
+const teamVisible = ref(false)
+const teamCount = 4
 const majorInfo = computed(() => majorInfoMap[props.majorId])
 const infoTags = computed(() => {
   const m = majorInfo.value
@@ -288,6 +300,20 @@ const majorName = computed(() => {
     box-shadow: 0 2px 6px rgba(54, 88, 255, 0.12);
   }
 
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 10px;
+    background: var(--iflyv-brand-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 2px;
+  }
 }
 
 .tag-inline {

@@ -50,6 +50,7 @@
           <div class="job-card__match">
             <span class="job-card__match-value">{{ job.matchRate }}</span>
             <span class="job-card__match-unit">%</span>
+            <CircleAlert :size="13" :stroke-width="2" class="job-card__match-info" @click.stop="ruleDialogVisible = true" />
           </div>
         </div>
         <div class="job-card__bar">
@@ -258,11 +259,72 @@
       </div>
     </template>
   </el-dialog>
+
+  <!-- 计算规则弹窗 -->
+  <el-dialog
+    v-model="ruleDialogVisible"
+    title="岗位匹配率计算规则"
+    width="560px"
+    append-to-body
+    destroy-on-close
+    align-center
+  >
+    <div class="rule-dialog">
+      <div class="rule-section">
+        <h4 class="rule-section__title">计算公式</h4>
+        <div class="rule-formula">
+          岗位匹配率 = （已覆盖技能数 ÷ 岗位要求总技能数）× 100%
+        </div>
+      </div>
+      <div class="rule-section">
+        <h4 class="rule-section__title">评估维度</h4>
+        <div class="rule-items">
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #22C55E" />
+            <span class="rule-item__label">专业技能覆盖</span>
+            <span class="rule-item__desc">课程教学内容与岗位技能要求的匹配程度，权重 40%</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #3658FF" />
+            <span class="rule-item__label">知识体系匹配</span>
+            <span class="rule-item__desc">专业知识结构与岗位知识需求的吻合度，权重 30%</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #F5A623" />
+            <span class="rule-item__label">素质能力对标</span>
+            <span class="rule-item__desc">通用能力与职业素养培养的匹配情况，权重 20%</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #8B5CF6" />
+            <span class="rule-item__label">实践经验关联</span>
+            <span class="rule-item__desc">实训实习环节与岗位实操要求的关联度，权重 10%</span>
+          </div>
+        </div>
+      </div>
+      <div class="rule-section">
+        <h4 class="rule-section__title">等级标准</h4>
+        <div class="rule-levels">
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #22C55E; width: 100%" />
+            <span class="rule-level__text">≥ 80%　高度匹配</span>
+          </div>
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #F5A623; width: 70%" />
+            <span class="rule-level__text">60%-79%　中度匹配</span>
+          </div>
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #EF4444; width: 40%" />
+            <span class="rule-level__text">＜ 60%　待提升</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Sparkles, Plus, X, Check, Briefcase, Search, BookOpen } from 'lucide-vue-next'
+import { Sparkles, Plus, X, Check, Briefcase, Search, BookOpen, CircleAlert } from 'lucide-vue-next'
 import { ElMessage } from 'element-plus'
 import type { JobMatch, AiRecommendedJob, Course } from '../data/majors'
 import { aiRecommendedJobMap, jobCatalog, jobMatchMap, pendingCourses } from '../data/majors'
@@ -278,6 +340,7 @@ const emit = defineEmits<{
   removeJob: [jobId: string]
 }>()
 
+const ruleDialogVisible = ref(false)
 const dialogVisible = ref(false)
 const selectedJob = ref<JobMatch | null>(null)
 const activeCategory = ref('')
@@ -1208,6 +1271,102 @@ function barColorClass(rate: number) {
   &__actions {
     display: flex;
     gap: var(--iflyv-spacing-2);
+  }
+}
+
+/* ====== 匹配率感叹号 ====== */
+.job-card__match-info {
+  color: var(--iflyv-text-4);
+  cursor: pointer;
+  margin-left: 2px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--iflyv-brand-primary);
+  }
+}
+
+/* ====== 计算规则弹窗 ====== */
+.rule-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iflyv-spacing-5);
+}
+
+.rule-section {
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--iflyv-text-1);
+    margin: 0 0 var(--iflyv-spacing-3);
+  }
+}
+
+.rule-formula {
+  padding: 14px 18px;
+  background: var(--iflyv-brand-bg);
+  border-radius: var(--iflyv-radius-smallmodule);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--iflyv-brand-primary);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.rule-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--iflyv-text-1);
+    white-space: nowrap;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--iflyv-text-3);
+  }
+}
+
+.rule-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__bar {
+    height: 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    max-width: 120px;
+  }
+
+  &__text {
+    font-size: 13px;
+    color: var(--iflyv-text-2);
   }
 }
 </style>

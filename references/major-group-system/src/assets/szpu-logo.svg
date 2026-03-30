@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4231A"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+  </defs>
+  <!-- 外圆环 -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#C62828" stroke-width="4"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#C62828" stroke-width="1.5"/>
+  <!-- 内圆底色 - 白色适配白色背景 -->
+  <circle cx="100" cy="100" r="86" fill="#fff"/>
+  <!-- 中心图案 - 簕杜鹃花瓣三角形 + T 字造型 -->
+  <g transform="translate(100,90)">
+    <!-- 三片花瓣构成的三角形 -->
+    <polygon points="0,-42 -38,22 38,22" fill="url(#redGrad)" stroke="none"/>
+    <!-- T 字横杠 (白色镂空) -->
+    <rect x="-22" y="-14" width="44" height="9" rx="1.5" fill="#fff"/>
+    <!-- T 字竖杠 (白色镂空) -->
+    <rect x="-5" y="-8" width="10" height="30" rx="1.5" fill="#fff"/>
+  </g>
+  <!-- 上弧文字: 深圳职业技术大学 -->
+  <path id="topArc" d="M 30,100 A 70,70 0 0,1 170,100" fill="none"/>
+  <text font-family="SimSun, STSong, serif" font-size="14" fill="#C62828" font-weight="600" letter-spacing="4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">深圳职业技术大学</textPath>
+  </text>
+  <!-- 下弧文字: SHENZHEN POLYTECHNIC UNIVERSITY -->
+  <path id="bottomArc" d="M 28,108 A 72,72 0 0,0 172,108" fill="none"/>
+  <text font-family="Times New Roman, serif" font-size="7.5" fill="#C62828" letter-spacing="1.2">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">SHENZHEN POLYTECHNIC UNIVERSITY</textPath>
+  </text>
+  <!-- 底部年份 -->
+  <text x="100" y="175" text-anchor="middle" font-family="Times New Roman, serif" font-size="11" fill="#C62828" letter-spacing="2">1993</text>
+</svg>

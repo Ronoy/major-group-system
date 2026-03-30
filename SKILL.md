@@ -15,7 +15,7 @@ Generate a production-grade Vue 3 frontend for managing vocational college major
 
 ## Reference Implementation
 
-The canonical reference project lives at `./major-group-system`. When generating a new project, read components from this reference to ensure fidelity. The reference contains 13+ Vue components, a complete design token system, and ECharts visualizations.
+The canonical reference project lives at `./major-group-system`. When generating a new project, read components from this reference to ensure fidelity. The reference contains 23 Vue components, a complete design token system, ECharts visualizations, and a 3-step plan workflow (解析确认 → 数据检索 → 智能修订).
 
 ## Step 1: Gather Input
 
@@ -24,14 +24,14 @@ Collect the following from the user. If they provide a training plan document (P
 ### Required
 | Field | Example |
 |-------|---------|
-| School name (学校名称) | 江西应用技术职业学院 |
-| College name (学院名称) | 电子信息工程学院 |
-| Primary major (主专业) | 电子信息工程技术 |
-| Major code (专业代码) | 510101 |
+| School name (学校名称) | 深圳职业技术大学 |
+| College name (学院名称) | 人工智能学院 |
+| Primary major (主专业) | 软件技术 |
+| Major code (专业代码) | 610205 |
 | Training level (培养层次) | 高职(专科) |
 | Duration (学制) | 3年 |
 | Major group (专业大类) | 电子与信息大类 |
-| Location (所在地) | 江西赣州 |
+| Location (所在地) | 深圳 |
 
 ### Extracted from Training Plan
 | Data | Description |
@@ -55,23 +55,36 @@ Collect the following from the user. If they provide a training plan document (P
 ```
 <project-name>/
 ├── src/
-│   ├── App.vue                    # Two-page layout (home + detail)
+│   ├── App.vue                    # Multi-page layout (icon-rail + sub-menu + content)
 │   ├── main.ts                    # Entry point
 │   ├── components/
-│   │   ├── SystemMap.vue          # Homepage: AI input + module grid
-│   │   ├── MajorDetail.vue        # Detail page coordinator
+│   │   ├── SystemMap.vue          # Homepage: header + AI input + module grid + tools
+│   │   ├── MajorDetail.vue        # Major detail coordinator
 │   │   ├── MajorBasicInfo.vue     # Info description + action cards
 │   │   ├── SectionTitle.vue       # Reusable section header
-│   │   ├── JobList.vue            # Filterable job cards + picker
+│   │   ├── SearchHero.vue         # Reusable search hero section
+│   │   ├── AiInsights.vue         # AI insights display
+│   │   ├── JobList.vue            # Filterable job cards + picker + AI recommendations
 │   │   ├── JobProfileDialog.vue   # Job detail modal
 │   │   ├── JobAtlasDialog.vue     # Job atlas modal
-│   │   ├── CompetencyRadar.vue    # ECharts radar chart
+│   │   ├── CompetencyRadar.vue    # ECharts Sankey/radar chart
 │   │   ├── CourseMap.vue          # Semester grid + SVG prerequisite lines
 │   │   ├── CourseDetailDialog.vue # Course detail + edit mode
 │   │   ├── CourseJobChord.vue     # ECharts chord diagram
-│   │   └── MajorAtlasView.vue    # Full-screen force-directed graph
+│   │   ├── MajorAtlasView.vue    # Full-screen force-directed graph
+│   │   ├── DataOverview.vue       # Data statistics with policies/standards/plans
+│   │   ├── PlanManagement.vue     # Training plan CRUD management
+│   │   ├── PlanParseConfirm.vue   # Step 1: Document parse + template matching
+│   │   ├── PlanDataSearch.vue     # Step 2: Knowledge base retrieval + data selection
+│   │   ├── PlanRevision.vue       # Step 3: AI-assisted intelligent revision editor
+│   │   ├── PlanPreview.vue        # Document-style preview with TOC + export
+│   │   ├── PlanResearch.vue       # Training plan research landing page
+│   │   ├── TeamManagement.vue     # Team member management dialog
+│   │   └── PlaceholderPage.vue    # Placeholder for WIP features
 │   ├── data/
 │   │   └── majors.ts             # All interfaces + data (customize per school)
+│   ├── assets/
+│   │   └── szpu-logo.svg         # School logo (customize per school)
 │   └── styles/
 │       ├── global.scss
 │       ├── design-token/          # iflyv CSS variables (DO NOT MODIFY)
@@ -96,6 +109,7 @@ Collect the following from the user. If they provide a training plan document (P
 2. **Copy design tokens**: Read and copy the entire `styles/` directory from reference — these are standardized and school-independent
 3. **Copy components**: Read each component from the reference and copy as-is — they are data-driven and adapt to whatever data is provided
 4. **Generate data layer**: This is the key customization step — build `src/data/majors.ts` with school-specific data
+5. **Customize App.vue**: Update the `orgData` array for the school's college/major tree, update `statsMajorList` for data overview filtering
 
 Read `references/data-interfaces.md` for the complete TypeScript interfaces that must be implemented in majors.ts.
 
@@ -133,7 +147,7 @@ When generating courses, establish logical prerequisite chains based on the curr
 - Advanced/AI courses (学期4-5) depend on core courses
 - Capstone (学期5-6) depends on advanced courses
 
-Example chain: `电路分析 → 模拟电子 → PCB设计 → 电子产品工艺`
+Example chain: `程序设计基础 → 数据结构 → Web前端开发 → 前端框架实战`
 
 ### Data Generation from Training Plan
 
@@ -146,7 +160,39 @@ If the user provides a raw training plan document:
 6. Generate course-job links by matching course content to job skill requirements
 7. Create learning tasks by decomposing each course into 2-3 actionable tasks
 
-## Step 4: Install Dependencies & Verify
+## Step 4: Customize App.vue
+
+App.vue contains school-specific navigation data that must be customized:
+
+### orgData (人培方案专业目录树)
+Update the college/major tree for the school's organizational structure:
+```typescript
+const orgData: OrgCollege[] = [
+  {
+    id: 'org-1', name: '人工智能学院', children: [
+      { code: '610205', name: '软件技术' },
+      { code: '510205', name: '大数据技术' },
+      // ... school-specific majors
+    ],
+  },
+  // ... more colleges
+]
+```
+
+### statsMajorList (数据概览专业筛选)
+Update the major list for data filtering:
+```typescript
+const statsMajorList = [
+  { code: '610205', name: '软件技术' },
+  { code: '510205', name: '大数据技术' },
+  // ... school-specific majors
+]
+```
+
+### School branding
+Update school name, logo, and role options in SystemMap.vue header.
+
+## Step 5: Install Dependencies & Verify
 
 ```bash
 npm install
@@ -175,10 +221,85 @@ open dist/index.html     # Double-click to open, no server needed
 
 ## Key Architecture Decisions
 
-### Two-Page SPA (No Router)
-- `currentPage` ref switches between `'home'` and `'major'`
-- Home page: full-screen SystemMap
-- Major page: topbar (56px) + sidebar (200px) + scrollable content area
+### Multi-Page SPA (No Router)
+
+The app uses a `currentPage` ref to switch between 9 pages:
+
+| Page | Type | Layout |
+|------|------|--------|
+| `home` | SystemMap | Full-screen, no sidebar |
+| `major-detail` | MajorDetail | Icon-rail + sub-menu (major list) + content |
+| `plan-mgmt` | PlanManagement | Icon-rail + sub-menu (college/major tree with search) + content |
+| `plan-parse` | PlanParseConfirm | Icon-rail + full-width (plan workflow step 1) |
+| `plan-datasearch` | PlanDataSearch | Icon-rail + full-width (plan workflow step 2) |
+| `plan-revision` | PlanRevision | Icon-rail + full-width (plan workflow step 3) |
+| `plan-preview` | PlanPreview | Icon-rail + full-width (document preview) |
+| `plan-research` | PlanResearch | Icon-rail + full-width content (no sub-menu) |
+| `data-stats` | DataOverview | Icon-rail + sub-menu (major filter list) + content |
+
+### Plan Workflow (人培方案工作流)
+
+A 3-step workflow for creating/revising training plans, entered from PlanManagement or MajorDetail (empty major upload):
+
+```
+Upload → [1] 解析确认 → [2] 数据检索 → [3] 智能修订 → 方案预览
+         PlanParseConfirm  PlanDataSearch  PlanRevision   PlanPreview
+```
+
+**Entry points**:
+- PlanManagement: "导入" button → emits `enter-plan-flow` with target `plan-parse`
+- PlanManagement: "编辑" button → emits `enter-plan-flow` with target `plan-revision`
+- PlanManagement: "预览" button → emits `enter-plan-flow` with target `plan-preview`
+- MajorDetail: Empty major upload → emits `enter-plan-flow` with target `plan-parse`
+
+**App.vue plan flow state**:
+```typescript
+const activePlanName = ref('2026级软件技术专业人才培养方案')
+const activePlanCode = ref('610205')
+const activePlanMajor = ref('软件技术')
+const activePlanYear = ref('2026')
+
+function handleEnterPlanFlow(plan: { name, code, major, year, target }) {
+  // Set plan metadata, switch to target page
+}
+
+function handlePlanNavigate(target: string) {
+  // Navigate between workflow steps
+}
+```
+
+All 4 plan workflow components share:
+- Props: `planName`, `planCode`, `planMajor`, `planYear`
+- Emits: `back` (returns to plan-mgmt), `navigate(target)` (moves between steps)
+- Use `major-content--full` class (no padding, no inner wrapper)
+- Plan workflow pages map to the `plan` rail item in activeRailId
+
+**Step indicator**: Shared visual pattern across PlanParseConfirm and PlanDataSearch:
+```html
+<div class="step-indicator">
+  <div class="step done"><span class="step-num">✓</span><span class="step-text">解析确认</span></div>
+  <div class="step-line done" />
+  <div class="step active"><span class="step-num">2</span><span class="step-text">数据检索</span></div>
+  <div class="step-line" />
+  <div class="step"><span class="step-num">3</span><span class="step-text">智能修订</span></div>
+</div>
+```
+
+### Navigation: Icon-Rail + Sub-Menu Pattern
+
+The sidebar uses a two-panel design:
+- **Icon-rail** (72px): Fixed vertical strip with icon+label items (首页, 专业管理, 人培方案, 人培调研, 数据概览)
+- **Sub-menu** (180px): Context-dependent panel that changes based on `currentPage`:
+  - `major-detail`: Shows "我的专业" + "专业群其他专业" major list
+  - `data-stats`: Shows "专业筛选" filter list
+  - `plan-mgmt`: Shows searchable college/major tree with expand/collapse
+
+Active item styling: Left accent bar (3px brand color) + brand color background.
+
+### Breadcrumb Navigation
+
+Top breadcrumb bar (48px): `系统首页 > 专业建设中心 > [current page title]`
+Each breadcrumb segment is clickable for navigation.
 
 ### Reactive Data
 - `jobs` and `courses` are `ref` arrays (not computed) so edits work
@@ -193,6 +314,17 @@ open dist/index.html     # Double-click to open, no server needed
 - Dark mode via `[data-theme="dark"]` on root
 
 ### ECharts Integration
-- CompetencyRadar: radar chart with `vue-echarts`
+- CompetencyRadar: Sankey/radar chart with `vue-echarts`
 - CourseJobChord: circular graph with course→job links
 - MajorAtlasView: force-directed graph with 6-level hierarchy, expandable nodes, bridge detection
+
+### Homepage (SystemMap.vue)
+
+The homepage consists of:
+1. **Top header**: School logo + name (left) + role switch buttons + user avatar (right)
+2. **AI Hero section**: Greeting + multi-line textarea with toolbar (attachments, knowledge base selector, model selector, voice input, send button)
+3. **AI Tool grid**: 4 circular tool buttons (专业助手, 数据分析, 课程规划, 政策解读)
+4. **Todo panel**: Collapsible task list with completion status and due dates
+5. **Module grid** (3-column): Feature cards for platform modules (专业调研, 岗位群管理, 专业群建设, 专业管理, 课程管理, AI创新工坊)
+
+Card hover effects: `translateY(-4px) scale(1.02)`, top color bar `scaleX(0→1)`, icon `scale(1.1) rotate(-4deg)`.

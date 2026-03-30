@@ -1,4 +1,22 @@
 import { ref } from 'vue'
+import {
+  Cpu,
+  Globe,
+  Smartphone,
+  Server,
+  BarChart3,
+  Users,
+  Briefcase,
+  BookOpen,
+  GraduationCap,
+  Layers,
+  Settings,
+  Shield,
+} from 'lucide-vue-next'
+
+// ============================================================
+// Interfaces
+// ============================================================
 
 export interface MajorInfo {
   id: string
@@ -39,16 +57,6 @@ export interface JobMatch {
   profile: JobProfile
 }
 
-export interface CompetencyItem {
-  name: string
-  value: number
-}
-
-export interface CompetencyCategory {
-  name: string
-  children: CompetencyItem[]
-}
-
 export interface Course {
   id: string
   name: string
@@ -80,815 +88,23 @@ export interface CourseJobLink {
 export interface LearningTask {
   id: string
   name: string
-  /** 关联的能力项：知识点、素养、通用技能、专业技能 */
+  /** 关联的能力项 */
   knowledge: string[]
   qualities: string[]
   generalSkills: string[]
   professionalSkills: string[]
 }
 
-export interface NavGroup {
-  id: string
-  label: string
-  icon: string
-  children: { id: string; label: string }[]
-}
-
-export const navGroups: NavGroup[] = [
-  {
-    id: 'g1',
-    label: '专业管理',
-    icon: 'Layers',
-    children: [
-      { id: 'p1', label: '专业画像分析' },
-      { id: 'p2', label: '专业群映射' },
-      { id: 'p3', label: '专业布点地图' },
-      { id: 'p4', label: '历年开设趋势' },
-    ],
-  },
-  {
-    id: 'g2',
-    label: '岗位匹配',
-    icon: 'Briefcase',
-    children: [
-      { id: 'p5', label: '岗位匹配分析' },
-      { id: 'p6', label: '招聘需求趋势' },
-      { id: 'p7', label: '新技术·新岗位预判' },
-      { id: 'p8', label: '职业与岗位' },
-    ],
-  },
-  {
-    id: 'g3',
-    label: '课程建设',
-    icon: 'BookOpen',
-    children: [
-      { id: 'p9', label: '课程地图' },
-      { id: 'p10', label: '课程资源库' },
-      { id: 'p11', label: '人培方案管理' },
-    ],
-  },
-  {
-    id: 'g4',
-    label: '数据报告',
-    icon: 'BarChart3',
-    children: [
-      { id: 'p12', label: '专业建设报告' },
-      { id: 'p13', label: '人岗匹配报告' },
-    ],
-  },
-]
-
-export interface CollegeItem {
-  id: string
+export interface CompetencyItem {
   name: string
-  majors: { id: string; name: string }[]
+  value: number
 }
 
-export const colleges: CollegeItem[] = [
-  {
-    id: 'c1',
-    name: '电子信息工程学院',
-    majors: [
-      { id: 'm1', name: '电子信息工程技术' },
-      { id: 'm2', name: '物联网应用技术' },
-      { id: 'm3', name: '通信技术' },
-      { id: 'm4', name: '智能产品开发与应用' },
-    ],
-  },
-  {
-    id: 'c2',
-    name: '计算机与软件工程学院',
-    majors: [
-      { id: 'm5', name: '计算机应用技术' },
-      { id: 'm6', name: '软件技术' },
-      { id: 'm7', name: '大数据技术' },
-      { id: 'm8', name: '人工智能技术应用' },
-    ],
-  },
-  {
-    id: 'c3',
-    name: '智能制造学院',
-    majors: [
-      { id: 'm9', name: '机电一体化技术' },
-      { id: 'm10', name: '工业机器人技术' },
-      { id: 'm11', name: '数控技术' },
-    ],
-  },
-  {
-    id: 'c4',
-    name: '商务与管理学院',
-    majors: [
-      { id: 'm12', name: '电子商务' },
-      { id: 'm13', name: '现代物流管理' },
-      { id: 'm14', name: '大数据与会计' },
-    ],
-  },
-]
-
-export const majorInfoMap: Record<string, MajorInfo> = {
-  m1: {
-    id: 'm1',
-    code: '510101',
-    name: '电子信息工程技术',
-    level: '专科（高职）',
-    duration: '3年',
-    college: '电子信息工程学院',
-    group: '电子与信息大类',
-    location: '江西赣州',
-    description:
-      '本专业培养掌握电子信息工程技术领域的基本理论和基本技能，能从事电子产品设计与开发、电子设备安装调试与维护、信息系统集成与应用等工作的高素质技术技能型人才。紧密对接赣州电子信息产业集群，聚焦智能终端、PCB制造、LED封装等区域支柱产业，培养产业急需的复合型技术人才。',
-    enrollment: 180,
-    established: '2008年',
-    tags: ['省级特色专业', '产教融合示范', '1+X证书试点'],
-    trainingPlanUrl: 'https://www.gzpt.edu.cn/xxgc/info/1166/1066.htm',
-  },
+export interface CompetencyCategory {
+  name: string
+  children: CompetencyItem[]
 }
 
-export const jobCategories = [
-  '全部岗位',
-  '技术开发类',
-  '硬件设计类',
-  '系统集成类',
-  '质量检测类',
-  '运维服务类',
-  '人工智能类',
-]
-
-export const jobMatchMap: Record<string, JobMatch[]> = {
-  m1: [
-    {
-      id: 'j1',
-      name: '嵌入式软件工程师',
-      category: '技术开发',
-      matchRate: 92,
-      salaryRange: '8-15万/年',
-      demand: '高',
-      skills: ['C/C++编程', '嵌入式Linux', 'RTOS系统', '单片机开发'],
-      profile: {
-        education: '大专及以上',
-        experience: '1-3年',
-        level: '初级岗位',
-        demandCount: 24500,
-        careerPath: '嵌入式软件工程师 → 高级嵌入式工程师 → 嵌入式架构师 → 技术总监',
-        tasks: ['编写嵌入式设备驱动和应用程序', '调试硬件接口与通信协议', '优化系统性能与内存管理', '参与产品方案设计与技术评审', '编写技术文档和测试报告', '维护和升级现有嵌入式系统'],
-        tools: ['Keil MDK', 'IAR Embedded', 'STM32CubeIDE', 'VS Code', 'GCC交叉编译器', 'J-Link调试器', 'Git版本控制', '逻辑分析仪'],
-        skills: ['C/C++编程', '嵌入式Linux开发', 'RTOS开发', '单片机开发', '中断与定时器', '嵌入式通信', 'Bootloader开发', 'OTA远程升级'],
-        qualities: ['逻辑思维', '问题解决', '耐心细致', '持续学习', '文档编写', '团队协作', '抗压能力', '责任心'],
-      },
-    },
-    {
-      id: 'j2',
-      name: 'PCB设计工程师',
-      category: '硬件设计',
-      matchRate: 88,
-      salaryRange: '7-12万/年',
-      demand: '高',
-      skills: ['Altium设计', 'PCB布线', '信号完整性', 'EMC设计'],
-      profile: {
-        education: '大专及以上',
-        experience: '1-3年',
-        level: '初级岗位',
-        demandCount: 18600,
-        careerPath: 'PCB设计工程师 → 高级硬件工程师 → 硬件架构师 → 研发总监',
-        tasks: ['完成PCB原理图设计与审核', '进行多层板布局布线', '处理信号完整性与EMC问题', '配合结构工程师完成产品集成', '跟进PCB打样与量产工艺', '制定硬件设计规范文档'],
-        tools: ['Altium Designer', 'Cadence Allegro', 'PADS', 'SIwave仿真', 'AutoCAD', '阻抗计算器', 'CAM350', '示波器'],
-        skills: ['PCB布局', '高速信号布线', '阻抗匹配', 'EMC/EMI设计', '电源完整性', 'DFM可制造性', 'Altium设计', '信号完整性'],
-        qualities: ['空间想象力', '细心严谨', '审美能力', '规范意识', '沟通协调', '持续学习', '质量意识', '成本意识'],
-      },
-    },
-    {
-      id: 'j3',
-      name: '电子产品测试工程师',
-      category: '质量检测',
-      matchRate: 85,
-      salaryRange: '6-10万/年',
-      demand: '中',
-      skills: ['测试仪器', '自动化测试', '故障分析', '质量标准'],
-      profile: {
-        education: '大专及以上',
-        experience: '0-2年',
-        level: '初级岗位',
-        demandCount: 15200,
-        careerPath: '测试工程师 → 高级测试工程师 → 测试主管 → 质量经理',
-        tasks: ['制定产品测试方案与用例', '执行功能和性能测试', '分析故障原因并出具报告', '搭建自动化测试环境', '参与产品可靠性验证', '跟踪质量改进措施'],
-        tools: ['示波器', '万用表', '频谱分析仪', '网络分析仪', 'LabVIEW', 'TestStand', 'Python自动化', 'JIRA'],
-        skills: ['功能测试方法', '性能测试设计', '可靠性测试', '自动化测试开发', '故障排查', '测试用例编写', 'EMC测试', '数据分析'],
-        qualities: ['严谨性', '逻辑思维', '耐心细致', '质量意识', '文档编写', '沟通能力', '责任心', '安全意识'],
-      },
-    },
-    {
-      id: 'j4',
-      name: '物联网系统集成工程师',
-      category: '系统集成',
-      matchRate: 82,
-      salaryRange: '8-14万/年',
-      demand: '高',
-      skills: ['传感器技术', 'MQTT协议', '云平台对接', '系统集成'],
-      profile: {
-        education: '大专及以上',
-        experience: '1-3年',
-        level: '中级岗位',
-        demandCount: 12800,
-        careerPath: '系统集成工程师 → 高级集成工程师 → 项目经理 → 解决方案架构师',
-        tasks: ['设计物联网系统整体方案', '选型与集成传感器设备', '部署边缘网关与云平台', '开发数据可视化应用', '现场安装调试与交付验收', '编写项目交付文档'],
-        tools: ['MQTT Broker', 'Node-RED', '阿里云IoT', 'ThingsBoard', 'Grafana', 'Docker', 'Postman', '串口工具'],
-        skills: ['传感器选型', 'MQTT开发', '边缘网关配置', '云平台对接', '数据可视化', '系统集成', '网络部署调试', 'API开发'],
-        qualities: ['系统思维', '沟通协调', '项目管理', '客户服务', '持续学习', '创新意识', '文档编写', '团队协作'],
-      },
-    },
-    {
-      id: 'j5',
-      name: 'FPGA开发工程师',
-      category: '技术开发',
-      matchRate: 78,
-      salaryRange: '10-18万/年',
-      demand: '中',
-      skills: ['Verilog编程', 'Vivado工具', '数字电路', '时序分析'],
-      profile: {
-        education: '本科及以上',
-        experience: '1-3年',
-        level: '中级岗位',
-        demandCount: 8600,
-        careerPath: 'FPGA工程师 → 高级FPGA工程师 → 数字IC设计师 → 芯片架构师',
-        tasks: ['编写Verilog/VHDL逻辑代码', '完成FPGA时序约束与综合', '进行仿真验证与板级联调', '集成IP核与高速接口', '优化资源占用与功耗', '撰写设计文档与测试报告'],
-        tools: ['Vivado', 'Quartus Prime', 'ModelSim', 'SignalTap', 'Synplify', 'ChipScope', 'Matlab', 'Python'],
-        skills: ['Verilog编程', '数字电路设计', '时序约束分析', 'FPGA综合', '高速接口设计', 'DSP算法实现', '逻辑分析', '仿真验证'],
-        qualities: ['逻辑思维', '数学思维', '耐心细致', '持续学习', '英文阅读', '规范意识', '创新思维', '团队协作'],
-      },
-    },
-    {
-      id: 'j6',
-      name: '智能终端产品经理',
-      category: '产品管理',
-      matchRate: 72,
-      salaryRange: '10-20万/年',
-      demand: '中',
-      skills: ['产品规划', '需求分析', '项目管理', '市场调研'],
-      profile: {
-        education: '本科及以上',
-        experience: '2-5年',
-        level: '中级岗位',
-        demandCount: 6400,
-        careerPath: '产品助理 → 产品经理 → 高级产品经理 → 产品总监',
-        tasks: ['调研市场需求与竞品分析', '撰写产品需求文档PRD', '设计产品原型与交互', '协调研发团队推进项目', '跟踪数据分析产品效果', '规划产品迭代路线图'],
-        tools: ['Axure/Figma', 'Jira/Tapd', 'Visio/ProcessOn', 'Excel数据分析', 'SQL基础', 'Xmind', 'PowerPoint', 'Confluence'],
-        skills: ['需求分析', '产品开发', '原型交互设计', '竞品分析', '项目管理', '数据分析', '技术方案评审', '系统集成'],
-        qualities: ['用户同理心', '逻辑思维', '沟通表达', '商业敏感度', '团队协作', '抗压能力', '创新意识', '创新思维'],
-      },
-    },
-    {
-      id: 'j7',
-      name: '电子设备运维工程师',
-      category: '运维服务',
-      matchRate: 80,
-      salaryRange: '5-9万/年',
-      demand: '高',
-      skills: ['设备维护', '故障排除', '网络运维', '安全管理'],
-      profile: {
-        education: '大专及以上',
-        experience: '0-2年',
-        level: '初级岗位',
-        demandCount: 21000,
-        careerPath: '运维工程师 → 高级运维工程师 → 运维主管 → 运维经理',
-        tasks: ['执行设备日常巡检维护', '诊断并排除设备故障', '管理备件库与维修记录', '制定预防性维护计划', '处理紧急故障应急响应', '编写运维操作规范文档'],
-        tools: ['万用表/示波器', '网络测试仪', '远程监控系统', 'CMDB资产管理', 'Zabbix监控', 'TeamViewer', '工单系统', 'Excel'],
-        skills: ['设备巡检维护', '故障排查', '备件管理', '预防性维护', '网络运维基础', '安全用电管理', '运维文档编写', '应急响应处理'],
-        qualities: ['责任心', '动手能力', '安全意识', '服务意识', '问题解决', '沟通表达', '耐心细致', '团队协作'],
-      },
-    },
-    {
-      id: 'j8',
-      name: 'AI边缘计算工程师',
-      category: '人工智能',
-      matchRate: 68,
-      salaryRange: '12-22万/年',
-      demand: '中',
-      skills: ['TFLite部署', '模型优化', 'ARM开发', '边缘推理'],
-      profile: {
-        education: '大专及以上',
-        experience: '1-3年',
-        level: '中级岗位',
-        demandCount: 8600,
-        careerPath: 'AI边缘工程师 → 高级AI工程师 → AI架构师 → 技术总监',
-        tasks: ['将AI模型量化压缩部署到边缘设备', '优化推理性能与功耗', '开发边缘端视觉算法应用', '搭建模型训练与验证流水线', '对接云端模型更新OTA', '编写算法评估与优化报告'],
-        tools: ['TensorFlow Lite', 'ONNX Runtime', 'OpenVINO', 'NVIDIA TensorRT', 'Docker', 'Python', 'C++', 'Git'],
-        skills: ['模型部署', '边缘计算', 'ARM/NPU优化', '图像处理', '模型转换适配', '性能分析', '嵌入式Linux开发', 'API开发'],
-        qualities: ['数学思维', '动手能力', '持续学习', '创新思维', '问题解决', '英文阅读', '逻辑思维', '团队协作'],
-      },
-    },
-  ],
-}
-
-export const competencyMap: Record<string, CompetencyItem[]> = {
-  m1: [
-    { name: '电路设计', value: 90 },
-    { name: '嵌入式开发', value: 85 },
-    { name: 'PCB设计', value: 88 },
-    { name: '信号处理', value: 75 },
-    { name: '通信技术', value: 78 },
-    { name: '编程能力', value: 82 },
-    { name: '测试调试', value: 86 },
-    { name: '物联网应用', value: 80 },
-  ],
-}
-
-export const competencyCategoryMap: Record<string, CompetencyCategory[]> = {
-  m1: [
-    {
-      name: '硬件设计',
-      children: [
-        { name: '电路设计', value: 90 },
-        { name: 'PCB设计', value: 88 },
-      ],
-    },
-    {
-      name: '软件开发',
-      children: [
-        { name: '嵌入式开发', value: 85 },
-        { name: '单片机应用', value: 88 },
-      ],
-    },
-    {
-      name: '通信与IoT',
-      children: [
-        { name: '通信技术', value: 78 },
-        { name: '物联网应用', value: 80 },
-      ],
-    },
-    {
-      name: '测试与AI',
-      children: [
-        { name: '测试调试', value: 86 },
-        { name: '边缘计算', value: 62 },
-      ],
-    },
-  ],
-}
-
-export const courseMap: Record<string, Course[]> = {
-  m1: [
-    {
-      id: 'cr1',
-      name: '电路分析基础',
-      category: '专业基础课',
-      credits: 4,
-      hours: 64,
-      semester: '第1学期',
-      description: '学习直流电路、交流电路的基本分析方法',
-      objectives: ['掌握电路基本定律和分析方法', '能运用戴维南定理等简化复杂电路', '具备交流电路的稳态分析能力', '能使用仪器仪表进行电路测量'],
-      contents: ['电路基本概念与定律', '电阻电路分析方法', '正弦交流电路', '三相电路', '暂态分析', '电路仿真实验'],
-      teachingMethods: ['理论讲授', '实验操作', '仿真实训', '项目驱动'],
-      assessment: '过程考核40%（实验报告+课堂测验）+ 期末考试60%',
-    },
-    {
-      id: 'cr2',
-      name: '模拟电子技术',
-      category: '专业基础课',
-      credits: 4,
-      hours: 64,
-      semester: '第2学期',
-      description: '掌握放大器、运算放大器等模拟电路设计',
-      prerequisites: ['cr1'],
-      objectives: ['理解半导体器件工作原理', '掌握基本放大电路分析与设计', '能设计运算放大器应用电路', '具备模拟电路调试与故障排除能力'],
-      contents: ['半导体二极管与三极管', '基本放大电路', '多级放大器', '运算放大器', '反馈与稳定性', '信号发生与功率放大'],
-      teachingMethods: ['理论讲授', '实验操作', 'EDA仿真', '课程设计'],
-      assessment: '实验考核30%（实验操作+报告）+ 课程设计20% + 期末考试50%',
-    },
-    {
-      id: 'cr3',
-      name: '数字电子技术',
-      category: '专业基础课',
-      credits: 3.5,
-      hours: 56,
-      semester: '第2学期',
-      description: '学习组合逻辑、时序逻辑电路设计方法',
-      prerequisites: ['cr1'],
-      objectives: ['掌握数制转换与逻辑代数化简', '能设计组合逻辑与时序逻辑电路', '了解可编程逻辑器件原理', '具备数字系统初步设计能力'],
-      contents: ['数制与编码', '逻辑门电路', '组合逻辑设计', '触发器与时序电路', '脉冲波形产生', 'D/A与A/D转换'],
-      teachingMethods: ['理论讲授', '实验操作', 'EDA仿真', '小组项目'],
-      assessment: '平时成绩30% + 实验报告20% + 期末考试50%',
-    },
-    {
-      id: 'cr4',
-      name: 'C语言程序设计',
-      category: '专业基础课',
-      credits: 4,
-      hours: 64,
-      semester: '第1学期',
-      description: '掌握C语言编程基础与嵌入式编程思维',
-      objectives: ['掌握C语言基本语法与编程范式', '能编写结构化程序解决实际问题', '理解指针与内存管理', '具备嵌入式编程基本思维'],
-      contents: ['数据类型与运算', '流程控制', '数组与字符串', '函数与模块化', '指针与动态内存', '结构体与文件操作'],
-      teachingMethods: ['理论讲授', '上机实践', '编程练习', '课程项目'],
-      assessment: '编程作业30% + 上机考试20% + 期末考试50%',
-    },
-    {
-      id: 'cr5',
-      name: '工程数学',
-      category: '专业基础课',
-      credits: 3,
-      hours: 48,
-      semester: '第1学期',
-      description: '高等数学、线性代数在工程中的应用',
-      objectives: ['掌握微积分基本方法', '能运用线性代数解决工程问题', '理解概率统计基本概念', '具备工程计算能力'],
-      contents: ['微积分', '常微分方程', '线性代数', '概率与数理统计'],
-      teachingMethods: ['理论讲授', '案例分析', '数学建模'],
-      assessment: '课堂测验20% + 作业20% + 期末考试60%',
-    },
-    {
-      id: 'cr6',
-      name: '单片机原理与应用',
-      category: '专业核心课',
-      credits: 4,
-      hours: 64,
-      semester: '第3学期',
-      description: '基于STM32的嵌入式系统开发核心课程',
-      prerequisites: ['cr3', 'cr4'],
-      objectives: ['掌握STM32单片机体系结构', '能独立完成GPIO、定时器、中断等外设编程', '具备串口/SPI/I2C通信开发能力', '能完成基于单片机的综合项目'],
-      contents: ['STM32体系结构', 'GPIO与中断系统', '定时器与PWM', 'ADC/DAC数据采集', '串口/SPI/I2C通信', '综合项目实战'],
-      teachingMethods: ['理实一体化', '项目驱动', '任务导向', '企业案例'],
-      assessment: '项目成果40%（含答辩）+ 实验报告20% + 期末考核40%',
-    },
-    {
-      id: 'cr7',
-      name: 'PCB设计与制作',
-      category: '专业核心课',
-      credits: 3,
-      hours: 48,
-      semester: '第3学期',
-      description: '使用Altium Designer进行PCB设计制造全流程',
-      prerequisites: ['cr2'],
-      objectives: ['掌握Altium Designer软件操作', '能完成原理图设计与PCB布局布线', '了解DFM可制造性设计规范', '能独立完成PCB打样全流程'],
-      contents: ['Altium Designer操作', '原理图设计', 'PCB布局与布线', '设计规则检查', 'Gerber文件输出', 'PCB打样与焊接'],
-      teachingMethods: ['理实一体化', '企业项目导入', '工学交替'],
-      assessment: '设计作品50%（含PCB实物）+ 过程考核20% + 期末考核30%',
-    },
-    {
-      id: 'cr8',
-      name: '传感器与检测技术',
-      category: '专业核心课',
-      credits: 3,
-      hours: 48,
-      semester: '第3学期',
-      description: '各类传感器原理、信号调理与数据采集',
-      prerequisites: ['cr2'],
-      objectives: ['了解常用传感器工作原理', '能进行传感器选型与信号调理', '掌握数据采集系统设计方法', '能完成传感器应用项目'],
-      contents: ['传感器概论', '温度/湿度/光照传感器', '力/压力/加速度传感器', '信号调理电路', '数据采集系统', '综合应用项目'],
-      teachingMethods: ['理论讲授', '实验操作', '项目实训'],
-      assessment: '实验报告30% + 项目设计30% + 期末考试40%',
-    },
-    {
-      id: 'cr9',
-      name: '嵌入式系统开发',
-      category: '专业核心课',
-      credits: 4,
-      hours: 64,
-      semester: '第4学期',
-      description: '嵌入式Linux系统开发与驱动编程',
-      prerequisites: ['cr6'],
-      objectives: ['掌握嵌入式Linux系统构建', '能编写字符/块设备驱动程序', '具备交叉编译与调试能力', '能完成嵌入式应用开发项目'],
-      contents: ['嵌入式Linux基础', 'Bootloader与内核移植', '设备驱动开发', '文件系统与进程管理', '网络编程', '综合项目实战'],
-      teachingMethods: ['理实一体化', '项目驱动', '企业案例', '翻转课堂'],
-      assessment: '项目成果45%（含答辩）+ 实验报告15% + 期末考核40%',
-    },
-    {
-      id: 'cr10',
-      name: '电子产品生产工艺',
-      category: '专业核心课',
-      credits: 3,
-      hours: 48,
-      semester: '第4学期',
-      description: 'SMT工艺、焊接技术、质量管控',
-      prerequisites: ['cr7'],
-      objectives: ['了解电子产品生产全流程', '掌握SMT贴片工艺流程', '能进行焊接质量检测', '具备生产工艺文件编写能力'],
-      contents: ['电子产品生产流程', 'SMT贴片工艺', '手工焊接与返修', '质量检测标准', '工艺文件编写', '产线实训'],
-      teachingMethods: ['现场教学', '工学交替', '企业导师'],
-      assessment: '实操考核50% + 工艺文件20% + 期末考试30%',
-    },
-    {
-      id: 'cr11',
-      name: '通信原理与应用',
-      category: '专业核心课',
-      credits: 3,
-      hours: 48,
-      semester: '第4学期',
-      description: '通信系统基本原理、调制解调、数字通信',
-      prerequisites: ['cr3'],
-      objectives: ['理解通信系统基本模型', '掌握调制解调基本原理', '了解数字通信技术', '能搭建简单通信系统'],
-      contents: ['通信系统模型', '模拟调制', '数字基带传输', '数字调制技术', '信道编码', '通信系统仿真'],
-      teachingMethods: ['理论讲授', '仿真实验', '课程设计'],
-      assessment: '实验报告25% + 课程设计25% + 期末考试50%',
-    },
-    {
-      id: 'cr12',
-      name: 'Python与数据分析',
-      category: 'AI实训课',
-      credits: 3,
-      hours: 48,
-      semester: '第4学期',
-      description: 'Python编程基础与数据处理分析实战',
-      prerequisites: ['cr4'],
-      objectives: ['掌握Python编程基础语法', '能使用NumPy/Pandas进行数据处理', '能进行数据可视化分析', '具备数据驱动决策思维'],
-      contents: ['Python基础语法', 'NumPy数值计算', 'Pandas数据处理', 'Matplotlib可视化', '数据清洗与特征工程', '数据分析实战项目'],
-      teachingMethods: ['翻转课堂', '项目驱动', '在线实训'],
-      assessment: '编程作业30% + 数据分析项目40% + 期末考试30%',
-    },
-    {
-      id: 'cr13',
-      name: '机器学习与智能算法',
-      category: 'AI实训课',
-      credits: 3,
-      hours: 48,
-      semester: '第5学期',
-      description: '常用机器学习算法原理与工程实践',
-      prerequisites: ['cr12'],
-      objectives: ['理解监督/无监督学习基本概念', '掌握常用分类与回归算法', '能使用Scikit-learn完成建模', '具备模型评估与优化能力'],
-      contents: ['机器学习概论', '线性回归与逻辑回归', '决策树与随机森林', 'SVM与KNN', '聚类算法', '模型评估与调优'],
-      teachingMethods: ['理论讲授', '案例实践', '竞赛驱动'],
-      assessment: '课程作业25% + 算法实践项目45% + 期末考试30%',
-    },
-    {
-      id: 'cr14',
-      name: 'AI边缘计算实训',
-      category: 'AI实训课',
-      credits: 4,
-      hours: 64,
-      semester: '第5学期',
-      description: 'AI模型在嵌入式设备上的部署与优化',
-      prerequisites: ['cr9', 'cr13'],
-      objectives: ['掌握模型量化与压缩技术', '能将TFLite/ONNX模型部署到边缘设备', '具备推理性能优化能力', '能完成端侧AI应用项目'],
-      contents: ['边缘计算概论', '模型量化与剪枝', 'TFLite模型转换与部署', 'ONNX Runtime应用', 'ARM/NPU推理优化', '端侧AI项目实战'],
-      teachingMethods: ['项目驱动', '企业案例', '竞赛导向'],
-      assessment: '项目成果55%（含答辩演示）+ 过程考核15% + 期末考核30%',
-    },
-    {
-      id: 'cr15',
-      name: '智能产品综合项目',
-      category: 'AI实训课',
-      credits: 4,
-      hours: 64,
-      semester: '第5学期',
-      description: '从需求分析到产品交付的全流程AI项目实战',
-      prerequisites: ['cr14'],
-      objectives: ['能完成产品需求分析与方案设计', '具备团队协作与项目管理能力', '能完成产品集成测试与交付', '具备创新设计与产品展示能力'],
-      contents: ['需求分析与方案设计', '硬件选型与搭建', '软件开发与集成', '测试与质量保障', '产品演示与答辩'],
-      teachingMethods: ['项目制学习', '团队协作', '企业导师', '路演答辩'],
-      assessment: '项目成果60%（含路演答辩）+ 过程文档20% + 个人贡献20%',
-    },
-    {
-      id: 'cr16',
-      name: 'EDA技术与FPGA应用',
-      category: '专业拓展课',
-      credits: 3,
-      hours: 48,
-      semester: '第4学期',
-      description: 'FPGA开发基础与数字系统设计',
-      prerequisites: ['cr3'],
-      objectives: ['掌握Verilog HDL基本语法', '能使用Vivado/Quartus进行FPGA开发', '具备数字系统仿真与验证能力', '能完成简单FPGA应用项目'],
-      contents: ['Verilog HDL语法', 'FPGA开发流程', '组合与时序逻辑设计', 'IP核使用', '仿真与时序分析', 'FPGA项目实训'],
-      teachingMethods: ['理实一体化', '项目驱动'],
-      assessment: '设计作品40% + 实验报告20% + 期末考试40%',
-    },
-    {
-      id: 'cr17',
-      name: '物联网系统集成',
-      category: '专业拓展课',
-      credits: 3,
-      hours: 48,
-      semester: '第5学期',
-      description: '物联网架构、协议与综合应用开发',
-      prerequisites: ['cr6', 'cr8'],
-      objectives: ['理解物联网三层架构', '掌握MQTT/CoAP等IoT协议', '能搭建物联网数据采集与可视化系统', '具备IoT系统集成能力'],
-      contents: ['物联网架构概论', 'MQTT/CoAP协议', '传感器网络', '边缘网关与云平台', '数据可视化', 'IoT综合项目'],
-      teachingMethods: ['项目驱动', '案例教学', '企业导师'],
-      assessment: '项目成果50% + 实验报告20% + 期末考试30%',
-    },
-    {
-      id: 'cr18',
-      name: '智能制造概论',
-      category: '专业拓展课',
-      credits: 2,
-      hours: 32,
-      semester: '第5学期',
-      description: '工业4.0、智能工厂与数字化转型',
-      objectives: ['了解工业4.0与智能制造体系', '理解数字孪生与工业互联网', '了解智能工厂生产模式', '具备跨领域融合视野'],
-      contents: ['工业4.0概论', '智能工厂架构', '数字孪生技术', '工业互联网', '智能制造案例'],
-      teachingMethods: ['理论讲授', '企业参观', '案例分析'],
-      assessment: '课程报告40% + 课堂表现20% + 期末考试40%',
-    },
-    {
-      id: 'cr19',
-      name: '创新创业实践',
-      category: '专业拓展课',
-      credits: 2,
-      hours: 32,
-      semester: '第4学期',
-      description: '电子信息领域创新项目孵化与创业实践',
-      objectives: ['了解创新创业基本流程', '能完成商业计划书撰写', '具备创新项目策划与路演能力', '培养创新思维与企业家精神'],
-      contents: ['创新方法论', '商业模式设计', '产品原型开发', '路演与融资', '创业案例分析'],
-      teachingMethods: ['工作坊', '项目孵化', '导师辅导', '路演答辩'],
-      assessment: '商业计划书40% + 路演答辩40% + 过程参与20%',
-    },
-    {
-      id: 'cr20',
-      name: '顶岗实习',
-      category: '专业核心课',
-      credits: 16,
-      hours: 480,
-      semester: '第6学期',
-      description: '在电子信息企业进行岗位实习实践',
-      prerequisites: ['cr15'],
-      objectives: ['能胜任企业电子信息相关岗位工作', '具备职业素养与团队协作能力', '积累行业实践经验', '完成实习报告与总结'],
-      contents: ['岗位技能实践', '企业文化适应', '项目参与', '实习报告撰写'],
-      teachingMethods: ['岗位实践', '企业导师', '校企双导师'],
-      assessment: '企业评价50% + 实习报告30% + 答辩20%',
-    },
-    {
-      id: 'cr21',
-      name: '毕业设计',
-      category: '专业核心课',
-      credits: 6,
-      hours: 120,
-      semester: '第6学期',
-      description: '完成电子信息相关课题的毕业设计与答辩',
-      prerequisites: ['cr15'],
-      objectives: ['能独立完成课题研究与方案设计', '具备系统开发与集成能力', '能撰写规范的毕业论文', '通过毕业答辩'],
-      contents: ['课题选题与开题', '方案设计与实施', '论文撰写', '毕业答辩'],
-      teachingMethods: ['导师指导', '自主研究'],
-      assessment: '论文质量40% + 作品成果30% + 答辩表现30%',
-    },
-  ],
-}
-
-/** 课程→岗位覆盖度映射 */
-export const courseJobLinkMap: Record<string, CourseJobLink[]> = {
-  cr1: [
-    { jobId: 'j2', jobName: 'PCB设计工程师', coverage: 72, coveredSkills: ['电路分析', '阻抗匹配', '电源完整性'] },
-    { jobId: 'j7', jobName: '电子设备运维工程师', coverage: 58, coveredSkills: ['电路诊断', '故障排除'] },
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 45, coveredSkills: ['电路测量', '故障定位'] },
-  ],
-  cr2: [
-    { jobId: 'j2', jobName: 'PCB设计工程师', coverage: 68, coveredSkills: ['模拟电路设计', '信号完整性', '电源设计'] },
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 35, coveredSkills: ['硬件接口理解', '信号调理'] },
-  ],
-  cr3: [
-    { jobId: 'j5', jobName: 'FPGA开发工程师', coverage: 75, coveredSkills: ['数字逻辑设计', '时序分析', '组合逻辑'] },
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 40, coveredSkills: ['数字接口', '逻辑设计基础'] },
-  ],
-  cr4: [
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 82, coveredSkills: ['C/C++编程', '指针与内存', '嵌入式编程思维', '模块化设计'] },
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 38, coveredSkills: ['C++基础', '底层编程'] },
-  ],
-  cr5: [
-    { jobId: 'j5', jobName: 'FPGA开发工程师', coverage: 30, coveredSkills: ['数学基础', 'DSP算法'] },
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 28, coveredSkills: ['线性代数', '概率统计'] },
-  ],
-  cr6: [
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 90, coveredSkills: ['单片机外设驱动', '中断与定时器', '串口/SPI/I2C通信', 'GPIO编程', 'ADC采集'] },
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 55, coveredSkills: ['传感器接口', '边缘数据采集'] },
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 42, coveredSkills: ['功能测试', '板级调试'] },
-  ],
-  cr7: [
-    { jobId: 'j2', jobName: 'PCB设计工程师', coverage: 92, coveredSkills: ['PCB多层板设计', 'Altium Designer操作', '布局布线', 'DFM设计', 'Gerber输出'] },
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 35, coveredSkills: ['PCB检测', '焊接质量'] },
-  ],
-  cr8: [
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 72, coveredSkills: ['传感器测试', '信号采集', '检测方法'] },
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 68, coveredSkills: ['传感器选型集成', '数据采集', '信号调理'] },
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 40, coveredSkills: ['传感器驱动', '数据采集编程'] },
-  ],
-  cr9: [
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 88, coveredSkills: ['嵌入式Linux开发', 'Bootloader开发', '驱动编程', '交叉编译', '系统移植'] },
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 52, coveredSkills: ['Linux嵌入式', 'ARM开发', '系统优化'] },
-  ],
-  cr10: [
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 78, coveredSkills: ['SMT工艺检测', '焊接质量', '生产标准', '可靠性测试'] },
-    { jobId: 'j6', jobName: '智能终端产品经理', coverage: 55, coveredSkills: ['生产工艺理解', '产品质量管控'] },
-    { jobId: 'j7', jobName: '电子设备运维工程师', coverage: 48, coveredSkills: ['设备维护', '故障分析'] },
-  ],
-  cr11: [
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 75, coveredSkills: ['通信协议', '网络部署', '数据传输'] },
-    { jobId: 'j7', jobName: '电子设备运维工程师', coverage: 62, coveredSkills: ['网络运维', '通信系统维护'] },
-  ],
-  cr12: [
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 65, coveredSkills: ['Python编程', '数据处理', '特征工程'] },
-    { jobId: 'j6', jobName: '智能终端产品经理', coverage: 35, coveredSkills: ['数据分析决策'] },
-  ],
-  cr13: [
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 78, coveredSkills: ['模型训练', '算法理解', '模型评估', '调优方法'] },
-  ],
-  cr14: [
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 92, coveredSkills: ['模型量化压缩', '边缘推理部署', 'TFLite部署', 'ARM/NPU优化', '性能分析调优'] },
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 42, coveredSkills: ['嵌入式应用', '性能优化'] },
-  ],
-  cr15: [
-    { jobId: 'j6', jobName: '智能终端产品经理', coverage: 70, coveredSkills: ['需求分析', '项目管理', '产品交付', '方案设计'] },
-    { jobId: 'j8', jobName: 'AI边缘计算工程师', coverage: 55, coveredSkills: ['AI应用集成', '项目实践'] },
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 45, coveredSkills: ['系统集成', '项目开发'] },
-  ],
-  cr16: [
-    { jobId: 'j5', jobName: 'FPGA开发工程师', coverage: 88, coveredSkills: ['Verilog/VHDL编程', 'FPGA开发', '时序约束', 'IP核集成', '仿真验证'] },
-  ],
-  cr17: [
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 85, coveredSkills: ['MQTT/CoAP协议', '边缘网关配置', '云平台对接', '系统方案设计', 'IoT集成'] },
-    { jobId: 'j7', jobName: '电子设备运维工程师', coverage: 40, coveredSkills: ['设备网络管理'] },
-  ],
-  cr18: [
-    { jobId: 'j6', jobName: '智能终端产品经理', coverage: 45, coveredSkills: ['产业视野', '数字化转型'] },
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 30, coveredSkills: ['工业IoT理解'] },
-  ],
-  cr19: [
-    { jobId: 'j6', jobName: '智能终端产品经理', coverage: 60, coveredSkills: ['需求调研', '产品方案', '商业模式', '创新思维'] },
-  ],
-  cr20: [
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 85, coveredSkills: ['岗位实践', '企业协作', '职业素养'] },
-    { jobId: 'j2', jobName: 'PCB设计工程师', coverage: 85, coveredSkills: ['岗位实践', '企业协作', '职业素养'] },
-    { jobId: 'j3', jobName: '电子产品测试工程师', coverage: 85, coveredSkills: ['岗位实践', '企业协作', '职业素养'] },
-    { jobId: 'j4', jobName: '物联网系统集成工程师', coverage: 85, coveredSkills: ['岗位实践', '企业协作', '职业素养'] },
-    { jobId: 'j7', jobName: '电子设备运维工程师', coverage: 85, coveredSkills: ['岗位实践', '企业协作', '职业素养'] },
-  ],
-  cr21: [
-    { jobId: 'j1', jobName: '嵌入式软件工程师', coverage: 70, coveredSkills: ['综合设计', '独立研究', '技术文档'] },
-    { jobId: 'j2', jobName: 'PCB设计工程师', coverage: 70, coveredSkills: ['综合设计', '独立研究', '技术文档'] },
-    { jobId: 'j5', jobName: 'FPGA开发工程师', coverage: 70, coveredSkills: ['综合设计', '独立研究', '技术文档'] },
-  ],
-}
-
-/** 课程学习任务映射 */
-export const learningTaskMap: Record<string, LearningTask[]> = {
-  // 电路分析基础
-  cr1: [
-    { id: 'lt-cr1-1', name: '直流电路分析与计算', knowledge: ['基尔霍夫定律', '欧姆定律', '节点电压法'], qualities: ['逻辑思维', '严谨性'], generalSkills: ['数学计算', '数据分析'], professionalSkills: ['电路分析', '电路仿真'] },
-    { id: 'lt-cr1-2', name: '交流电路特性测量', knowledge: ['阻抗概念', '相量分析', '功率因数'], qualities: ['实验规范', '安全意识'], generalSkills: ['仪器操作', '实验记录'], professionalSkills: ['交流测量', '示波器使用'] },
-  ],
-  // C语言程序设计
-  cr2: [
-    { id: 'lt-cr2-1', name: '嵌入式C语言基础编程', knowledge: ['数据类型', '指针与数组', '结构体'], qualities: ['逻辑思维', '耐心细致'], generalSkills: ['代码调试', '文档编写'], professionalSkills: ['C/C++编程', '代码规范'] },
-    { id: 'lt-cr2-2', name: '单片机GPIO控制程序开发', knowledge: ['寄存器操作', '位运算', 'GPIO配置'], qualities: ['动手能力', '问题解决'], generalSkills: ['编程调试', '版本管理'], professionalSkills: ['单片机开发', '嵌入式通信'] },
-  ],
-  // 电子技术基础
-  cr3: [
-    { id: 'lt-cr3-1', name: '模拟电路设计与仿真', knowledge: ['放大电路', '反馈原理', '运算放大器'], qualities: ['创新思维', '严谨性'], generalSkills: ['仿真验证', '数据分析'], professionalSkills: ['模拟电路设计', 'Multisim仿真'] },
-    { id: 'lt-cr3-2', name: '数字逻辑电路搭建', knowledge: ['组合逻辑', '时序逻辑', '触发器'], qualities: ['逻辑思维', '规范意识'], generalSkills: ['实验操作', '故障排查'], professionalSkills: ['数字电路设计', '逻辑分析'] },
-  ],
-  // 单片机应用技术
-  cr4: [
-    { id: 'lt-cr4-1', name: 'STM32最小系统搭建', knowledge: ['ARM架构', '时钟系统', '启动流程'], qualities: ['动手能力', '安全意识'], generalSkills: ['焊接技术', '原理图阅读'], professionalSkills: ['单片机开发', '中断与定时器'] },
-    { id: 'lt-cr4-2', name: '外设驱动开发与通信', knowledge: ['UART协议', 'SPI/I2C通信', '中断机制'], qualities: ['耐心细致', '持续学习'], generalSkills: ['技术文档阅读', '代码调试'], professionalSkills: ['嵌入式通信', 'Bootloader开发'] },
-  ],
-  // 传感器与检测技术
-  cr5: [
-    { id: 'lt-cr5-1', name: '温湿度传感器数据采集', knowledge: ['传感器原理', 'ADC转换', '信号调理'], qualities: ['严谨性', '数据敏感'], generalSkills: ['数据记录', '数据分析'], professionalSkills: ['传感器选型', '数据采集'] },
-    { id: 'lt-cr5-2', name: '多传感器融合检测系统', knowledge: ['多传感器融合', '滤波算法', '标定方法'], qualities: ['系统思维', '创新意识'], generalSkills: ['方案设计', '项目报告'], professionalSkills: ['系统集成', '信号处理'] },
-  ],
-  // PCB设计与制作
-  cr6: [
-    { id: 'lt-cr6-1', name: '双层PCB原理图与布局', knowledge: ['原理图规则', '封装库', '布局原则'], qualities: ['审美能力', '细心严谨'], generalSkills: ['EDA工具操作', '规范执行'], professionalSkills: ['Altium设计', 'PCB布局'] },
-    { id: 'lt-cr6-2', name: '高速信号PCB布线', knowledge: ['阻抗控制', '等长约束', 'EMC规则'], qualities: ['质量意识', '规范意识'], generalSkills: ['仿真验证', '设计评审'], professionalSkills: ['高速信号布线', '信号完整性'] },
-  ],
-  // 嵌入式系统开发
-  cr7: [
-    { id: 'lt-cr7-1', name: 'RTOS任务调度与管理', knowledge: ['FreeRTOS', '任务优先级', '信号量'], qualities: ['逻辑思维', '系统思维'], generalSkills: ['技术架构', '性能分析'], professionalSkills: ['RTOS开发', 'OTA远程升级'] },
-    { id: 'lt-cr7-2', name: 'Linux嵌入式应用开发', knowledge: ['Linux系统调用', '进程管理', '文件IO'], qualities: ['持续学习', '问题解决'], generalSkills: ['Linux操作', '脚本编写'], professionalSkills: ['嵌入式Linux开发', 'API开发'] },
-  ],
-  // 物联网应用技术
-  cr8: [
-    { id: 'lt-cr8-1', name: 'MQTT物联网通信实践', knowledge: ['MQTT协议', 'Topic设计', 'QoS等级'], qualities: ['系统思维', '创新意识'], generalSkills: ['网络调试', '协议分析'], professionalSkills: ['MQTT开发', '数据可视化'] },
-    { id: 'lt-cr8-2', name: '物联网云平台对接', knowledge: ['REST API', '设备影子', '数据模型'], qualities: ['项目管理', '团队协作'], generalSkills: ['接口调试', '文档编写'], professionalSkills: ['云平台对接', 'API开发'] },
-  ],
-  // 电子产品生产工艺
-  cr9: [
-    { id: 'lt-cr9-1', name: 'SMT贴片工艺实训', knowledge: ['SMT流程', '回流焊', '钢网设计'], qualities: ['质量意识', '安全意识'], generalSkills: ['工艺记录', '质量检验'], professionalSkills: ['SMT工艺', '可靠性测试'] },
-    { id: 'lt-cr9-2', name: '电子产品整机装配', knowledge: ['装配工艺', '防静电', '工艺文件'], qualities: ['规范意识', '团队协作'], generalSkills: ['工艺文件编写', '故障排查'], professionalSkills: ['整机装配', 'DFM可制造性'] },
-  ],
-  // Python与数据分析
-  cr10: [
-    { id: 'lt-cr10-1', name: 'Python数据处理与可视化', knowledge: ['Pandas库', '数据清洗', 'Matplotlib'], qualities: ['逻辑思维', '创新思维'], generalSkills: ['数据分析', '图表制作'], professionalSkills: ['Python编程', '数据可视化'] },
-    { id: 'lt-cr10-2', name: '设备数据分析报告', knowledge: ['统计方法', '异常检测', '趋势分析'], qualities: ['严谨性', '文档编写'], generalSkills: ['报告撰写', '数据解读'], professionalSkills: ['数据分析', '性能分析'] },
-  ],
-  // FPGA数字系统设计
-  cr11: [
-    { id: 'lt-cr11-1', name: 'Verilog组合逻辑设计', knowledge: ['Verilog语法', '组合电路', '综合约束'], qualities: ['逻辑思维', '规范意识'], generalSkills: ['HDL编码', '仿真验证'], professionalSkills: ['Verilog编程', 'FPGA综合'] },
-  ],
-  // AI边缘计算实训
-  cr12: [
-    { id: 'lt-cr12-1', name: 'TFLite模型部署实训', knowledge: ['模型量化', 'TFLite框架', '边缘推理'], qualities: ['创新思维', '持续学习'], generalSkills: ['模型评估', '性能分析'], professionalSkills: ['模型部署', '边缘计算'] },
-  ],
-  // 智能传感网络实训
-  cr13: [
-    { id: 'lt-cr13-1', name: '无线传感网络组网', knowledge: ['ZigBee协议', '网络拓扑', '功耗管理'], qualities: ['系统思维', '团队协作'], generalSkills: ['网络配置', '故障排查'], professionalSkills: ['WSN组网', '无线通信'] },
-  ],
-  // 机器视觉应用实训
-  cr14: [
-    { id: 'lt-cr14-1', name: 'OpenCV图像处理实践', knowledge: ['图像滤波', '边缘检测', '特征提取'], qualities: ['创新思维', '数学思维'], generalSkills: ['算法实现', '性能分析'], professionalSkills: ['图像处理', '数据可视化'] },
-  ],
-  // 智能产品项目实战
-  cr15: [
-    { id: 'lt-cr15-1', name: '智能产品原型设计与开发', knowledge: ['需求分析', '系统架构', '原型设计'], qualities: ['创新意识', '项目管理'], generalSkills: ['团队协作', '项目汇报'], professionalSkills: ['产品开发', '系统集成'] },
-    // ↑ 产品开发、系统集成、需求分析 等与多个岗位技能重合
-  ],
-}
-
-/** AI 推荐岗位 — 基于专业教学内容与产业趋势关联分析 */
 export interface AiRecommendedJob {
   id: string
   name: string
@@ -897,187 +113,902 @@ export interface AiRecommendedJob {
   salaryRange: string
   reason: string
   relatedCourses: string[]
-  /** 建议新增的课程（添加该岗位后建议开设） */
   suggestedCourses?: { name: string; reason: string }[]
 }
 
-export const aiRecommendedJobMap: Record<string, AiRecommendedJob[]> = {
+export interface NavGroup {
+  id: string
+  label: string
+  icon: any
+  children: { id: string; label: string }[]
+}
+
+// ============================================================
+// Navigation
+// ============================================================
+
+export const colleges = [
+  {
+    id: 'c1',
+    name: '人工智能学院',
+    majors: [
+      { id: 'm1', name: '软件技术' },
+      { id: 'm2', name: '大数据技术' },
+      { id: 'm3', name: '云计算技术应用' },
+      { id: 'm4', name: '人工智能技术应用' },
+    ],
+  },
+]
+
+export const navGroups: NavGroup[] = [
+  {
+    id: 'dev',
+    label: '开发方向',
+    icon: Cpu,
+    children: [
+      { id: 'frontend', label: 'Web前端' },
+      { id: 'backend', label: '后端开发' },
+      { id: 'mobile', label: '移动应用' },
+    ],
+  },
+  {
+    id: 'ops',
+    label: '运维方向',
+    icon: Server,
+    children: [
+      { id: 'devops', label: 'DevOps' },
+      { id: 'cloud', label: '云运维' },
+      { id: 'security', label: '安全运维' },
+    ],
+  },
+  {
+    id: 'data',
+    label: '数据方向',
+    icon: BarChart3,
+    children: [
+      { id: 'datadev', label: '数据开发' },
+      { id: 'dataanalysis', label: '数据分析' },
+    ],
+  },
+  {
+    id: 'management',
+    label: '项目管理',
+    icon: Users,
+    children: [
+      { id: 'pm', label: '项目管理' },
+      { id: 'test', label: '软件测试' },
+      { id: 'product', label: '产品助理' },
+    ],
+  },
+]
+
+export const jobCategories = [
+  'Web前端开发',
+  'Java后端开发',
+  '移动应用开发',
+  'DevOps运维',
+  '软件测试',
+  '数据开发',
+  '项目管理',
+]
+
+// ============================================================
+// Major Info
+// ============================================================
+
+export const majorInfoMap: Record<string, MajorInfo> = {
+  m1: {
+    id: 'm1',
+    code: '610205',
+    name: '软件技术',
+    level: '高职(专科)',
+    duration: '3年',
+    college: '人工智能学院',
+    group: '电子与信息大类',
+    location: '广东深圳',
+    description:
+      '本专业面向软件和信息技术服务业，培养掌握软件开发、Web前后端、移动应用开发、DevOps运维等核心技能，具有良好的职业素养和创新意识，能够从事软件编码、测试、部署与运维等工作的高素质技术技能人才。依托深圳产业优势和校企合作资源，紧密对接华为、腾讯、字节跳动等头部企业用人需求。',
+    enrollment: 200,
+    established: '2001',
+    tags: ['国家级骨干专业', '产教融合', '1+X证书试点'],
+  },
+}
+
+// ============================================================
+// Job Matches
+// ============================================================
+
+export const jobMatchMap: Record<string, JobMatch[]> = {
   m1: [
     {
-      id: 'ai-j1',
-      name: '智能硬件测试工程师',
-      category: '质量检测',
-      matchRate: 76,
-      salaryRange: '8-14万/年',
-      reason: '专业课程覆盖传感器、嵌入式、测试三大核心能力，与智能硬件测试岗位高度契合',
-      relatedCourses: ['传感器与检测技术', '电子产品生产工艺', '嵌入式系统开发'],
-      suggestedCourses: [
-        { name: '智能硬件测试方法', reason: '覆盖硬件可靠性测试、自动化测试台架搭建等核心能力' },
-      ],
+      id: 'j1',
+      name: 'Web前端开发工程师',
+      category: 'Web前端开发',
+      matchRate: 92,
+      salaryRange: '10-20K',
+      demand: '高',
+      skills: ['Vue/React', 'TypeScript', 'CSS', 'Webpack/Vite'],
+      profile: {
+        education: '大专及以上',
+        experience: '0-2年',
+        level: '初级/中级',
+        demandCount: 3200,
+        careerPath: '初级前端→中级前端→高级前端→前端架构师/技术经理',
+        tasks: ['根据设计稿完成页面开发', '实现前端交互逻辑与数据绑定', '前端性能优化与兼容适配', '参与前后端联调与接口对接', '编写组件库与技术文档'],
+        tools: ['VS Code', 'Chrome DevTools', 'Git', 'Figma', 'Postman'],
+        skills: ['HTML5/CSS3', 'JavaScript/TypeScript', 'Vue.js/React', '响应式布局', '前端工程化', 'HTTP协议'],
+        qualities: ['细致耐心', '审美意识', '沟通协作', '持续学习'],
+      },
     },
     {
-      id: 'ai-j2',
-      name: '工业视觉算法工程师',
-      category: '人工智能',
-      matchRate: 62,
-      salaryRange: '15-28万/年',
-      reason: 'AI边缘计算实训与嵌入式课程群为工业视觉部署提供了完整技能链',
-      relatedCourses: ['AI边缘计算实训', '机器学习与智能算法', 'Python与数据分析'],
-      suggestedCourses: [
-        { name: '工业视觉系统设计', reason: '补充光源选型、相机标定、缺陷检测算法等工业视觉专用能力' },
-        { name: '深度学习模型优化', reason: '强化模型量化、剪枝、蒸馏等部署优化技术' },
-      ],
+      id: 'j2',
+      name: 'Java后端开发工程师',
+      category: 'Java后端开发',
+      matchRate: 88,
+      salaryRange: '12-22K',
+      demand: '高',
+      skills: ['Java', 'Spring Boot', 'MySQL', 'Redis'],
+      profile: {
+        education: '大专及以上',
+        experience: '0-3年',
+        level: '初级/中级',
+        demandCount: 4100,
+        careerPath: '初级后端→中级后端→高级后端→架构师/技术总监',
+        tasks: ['设计与开发后端API接口', '数据库设计与SQL优化', '微服务架构开发与维护', '排查线上问题与性能调优', '参与技术方案评审'],
+        tools: ['IntelliJ IDEA', 'Maven/Gradle', 'Git', 'Docker', 'Navicat'],
+        skills: ['Java SE/EE', 'Spring Boot/Cloud', 'MySQL', 'Redis', 'Linux', 'RESTful API'],
+        qualities: ['逻辑思维', '系统性思维', '责任心', '抗压能力'],
+      },
     },
     {
-      id: 'ai-j3',
-      name: '电子工艺工程师',
-      category: '硬件设计',
-      matchRate: 74,
-      salaryRange: '7-12万/年',
-      reason: 'PCB设计、生产工艺、模拟电子三门课程直接对标该岗位核心能力要求',
-      relatedCourses: ['PCB设计与制作', '电子产品生产工艺', '模拟电子技术'],
-      suggestedCourses: [
-        { name: '先进封装与工艺管控', reason: '覆盖SiP封装、工艺FMEA、良率提升等进阶工艺能力' },
-      ],
+      id: 'j3',
+      name: '移动应用开发工程师',
+      category: '移动应用开发',
+      matchRate: 78,
+      salaryRange: '10-18K',
+      demand: '中',
+      skills: ['Flutter/RN', 'Dart/JS', 'iOS/Android', 'UI适配'],
+      profile: {
+        education: '大专及以上',
+        experience: '0-2年',
+        level: '初级/中级',
+        demandCount: 1800,
+        careerPath: '初级移动端→中级→高级→移动端架构师',
+        tasks: ['移动端UI开发与交互实现', '调用原生API完成功能开发', '应用性能优化与包体积控制', '应用上架与版本管理', '跨平台适配与兼容测试'],
+        tools: ['Android Studio', 'Xcode', 'Flutter SDK', 'Charles', 'Git'],
+        skills: ['Flutter/React Native', 'Dart/JavaScript', '原生API调用', '状态管理', 'APP性能优化'],
+        qualities: ['用户体验意识', '耐心细致', '快速学习', '跨平台思维'],
+      },
     },
     {
-      id: 'ai-j4',
-      name: '自动化测试开发工程师',
-      category: '技术开发',
-      matchRate: 58,
-      salaryRange: '10-18万/年',
-      reason: 'C语言与Python双语言基础，结合测试课程，可快速胜任自动化测试脚本开发',
-      relatedCourses: ['C语言程序设计', 'Python与数据分析', '传感器与检测技术'],
-      suggestedCourses: [
-        { name: '自动化测试框架开发', reason: '补充TestStand、Robot Framework等自动化测试框架实操能力' },
-      ],
+      id: 'j4',
+      name: 'DevOps工程师',
+      category: 'DevOps运维',
+      matchRate: 75,
+      salaryRange: '12-25K',
+      demand: '高',
+      skills: ['Docker', 'K8s', 'CI/CD', 'Linux'],
+      profile: {
+        education: '大专及以上',
+        experience: '1-3年',
+        level: '中级',
+        demandCount: 2200,
+        careerPath: '运维工程师→DevOps工程师→SRE→运维架构师',
+        tasks: ['搭建与维护CI/CD流水线', '容器化部署与K8s集群管理', '监控告警体系建设', '自动化运维脚本开发', '故障排查与应急响应'],
+        tools: ['Jenkins/GitLab CI', 'Docker', 'Kubernetes', 'Prometheus', 'Ansible'],
+        skills: ['Linux系统管理', 'Docker容器化', 'Kubernetes编排', 'Shell/Python脚本', '网络与安全基础'],
+        qualities: ['严谨细致', '应急能力', '自动化思维', '全局视野'],
+      },
     },
     {
-      id: 'ai-j5',
-      name: '信创适配工程师',
-      category: '技术开发',
+      id: 'j5',
+      name: '软件测试工程师',
+      category: '软件测试',
+      matchRate: 82,
+      salaryRange: '8-16K',
+      demand: '中',
+      skills: ['测试用例', 'Selenium', 'JMeter', '缺陷管理'],
+      profile: {
+        education: '大专及以上',
+        experience: '0-2年',
+        level: '初级/中级',
+        demandCount: 2600,
+        careerPath: '初级测试→中级测试→测试主管→测试架构师/QA经理',
+        tasks: ['编写测试计划与测试用例', '执行功能测试与回归测试', '自动化测试脚本编写', '性能测试与安全测试', '缺陷跟踪与测试报告'],
+        tools: ['Selenium', 'JMeter', 'Postman', 'JIRA', 'Git'],
+        skills: ['测试理论与方法', '自动化测试框架', '性能测试工具', 'SQL查询', '接口测试'],
+        qualities: ['耐心细致', '批判思维', '沟通能力', '质量意识'],
+      },
+    },
+    {
+      id: 'j6',
+      name: '数据开发工程师',
+      category: '数据开发',
       matchRate: 70,
-      salaryRange: '10-20万/年',
-      reason: '嵌入式Linux、C/C++编程、硬件驱动开发等课程能力与信创国产化软硬件适配高度契合，国产替代政策持续驱动岗位需求增长',
-      relatedCourses: ['嵌入式系统开发', 'C语言程序设计', '单片机应用技术'],
-      suggestedCourses: [
-        { name: '国产操作系统与芯片适配', reason: '覆盖麒麟/统信OS、飞腾/鲲鹏/龙芯芯片驱动适配及兼容性测试' },
-        { name: '信创软件迁移与测试', reason: '补充国产数据库、中间件迁移适配及信创环境功能验证能力' },
+      salaryRange: '12-20K',
+      demand: '中',
+      skills: ['Python', 'SQL', 'Spark', 'ETL'],
+      profile: {
+        education: '大专及以上',
+        experience: '1-3年',
+        level: '初级/中级',
+        demandCount: 1500,
+        careerPath: '数据开发→高级数据开发→数据架构师',
+        tasks: ['数据仓库建模与ETL开发', '数据清洗与质量治理', '数据接口开发与优化', '数据报表与可视化开发', '大数据平台运维'],
+        tools: ['Hive', 'Spark', 'Airflow', 'DataX', 'Superset'],
+        skills: ['Python/SQL', 'Hadoop/Spark生态', 'ETL流程设计', '数据建模', '数据质量管理'],
+        qualities: ['逻辑严密', '数据敏感', '耐心', '系统思维'],
+      },
+    },
+  ],
+}
+
+// ============================================================
+// Courses (软件技术专业 — 6学期)
+// ============================================================
+
+export const courseMap: Record<string, Course[]> = {
+  m1: [
+    // ---- 第1学期 ----
+    {
+      id: 'cr1',
+      name: '计算机基础与办公自动化',
+      category: '专业基础课',
+      credits: 3,
+      hours: 48,
+      semester: '第1学期',
+      description: '计算机组成、操作系统基础、办公软件高级应用',
+      objectives: ['了解计算机硬件与软件体系', '熟练使用Office办公套件', '掌握信息检索与数字化办公能力'],
+      contents: ['计算机组成原理概述', 'Windows/Linux基础操作', 'Word/Excel/PPT高级应用', '信息检索与网络安全基础'],
+      teachingMethods: ['理论讲授', '上机实践', '案例教学'],
+      assessment: '上机考试40% + 课堂作业30% + 期末考试30%',
+    },
+    {
+      id: 'cr2',
+      name: 'HTML5与CSS3网页设计',
+      category: '专业基础课',
+      credits: 4,
+      hours: 64,
+      semester: '第1学期',
+      description: '网页结构、样式与响应式布局基础',
+      objectives: ['掌握HTML5语义化标签', '熟练使用CSS3布局与动画', '能独立完成响应式网页设计', '了解Web标准与浏览器兼容'],
+      contents: ['HTML5语义化', 'CSS3选择器与盒模型', 'Flexbox与Grid布局', '响应式设计与媒体查询', 'CSS动画与过渡', '项目实战'],
+      teachingMethods: ['理论讲授', '上机实践', '项目驱动'],
+      assessment: '项目作品40% + 上机考试30% + 平时成绩30%',
+    },
+    {
+      id: 'cr3',
+      name: 'Java程序设计基础',
+      category: '专业基础课',
+      credits: 4,
+      hours: 64,
+      semester: '第1学期',
+      description: 'Java语法基础、面向对象编程思想',
+      objectives: ['掌握Java基础语法与数据类型', '理解面向对象编程三大特性', '能编写结构化Java程序', '具备调试与排错基本能力'],
+      contents: ['Java开发环境搭建', '数据类型与流程控制', '数组与字符串', '面向对象(封装/继承/多态)', '异常处理', '集合框架入门'],
+      teachingMethods: ['理论讲授', '编程练习', '翻转课堂'],
+      assessment: '编程作业35% + 上机考试25% + 期末考试40%',
+    },
+    {
+      id: 'cr4',
+      name: '数据库原理与应用',
+      category: '专业基础课',
+      credits: 4,
+      hours: 64,
+      semester: '第1学期',
+      description: '关系型数据库原理、SQL语言与MySQL应用',
+      objectives: ['理解关系型数据库基本概念', '熟练编写SQL增删改查', '掌握数据库设计范式', '能进行MySQL数据库管理'],
+      contents: ['数据库基本概念', 'SQL语言(DDL/DML/DQL)', '数据库设计与ER图', '索引与查询优化', '事务与并发控制', 'MySQL管理工具'],
+      teachingMethods: ['理论讲授', '上机实践', '案例分析'],
+      assessment: '上机考试35% + 数据库设计作业25% + 期末考试40%',
+    },
+    // ---- 第2学期 ----
+    {
+      id: 'cr5',
+      name: 'JavaScript程序设计',
+      category: '专业基础课',
+      credits: 4,
+      hours: 64,
+      semester: '第2学期',
+      description: 'JavaScript核心语法、DOM操作与ES6+新特性',
+      prerequisites: ['cr2'],
+      objectives: ['掌握JavaScript核心语法', '熟练操作DOM与事件处理', '理解ES6+新特性', '能实现常见网页交互效果'],
+      contents: ['JS基础语法与数据类型', 'DOM/BOM操作', '事件机制与异步编程', 'ES6+(箭头函数/解构/Promise/async)', '模块化开发', '综合项目实战'],
+      teachingMethods: ['理论讲授', '编程实践', '项目驱动'],
+      assessment: '项目作品40% + 编程作业30% + 期末考试30%',
+    },
+    {
+      id: 'cr6',
+      name: 'Java高级编程',
+      category: '专业基础课',
+      credits: 3,
+      hours: 48,
+      semester: '第2学期',
+      description: 'Java高级特性、IO流、多线程与网络编程',
+      prerequisites: ['cr3'],
+      objectives: ['掌握Java IO流与文件操作', '理解多线程编程模型', '了解网络编程基础', '能使用JDBC操作数据库'],
+      contents: ['IO流与NIO', '多线程与线程池', '网络编程(Socket)', 'JDBC与连接池', '反射与注解', 'Lambda与Stream'],
+      teachingMethods: ['理论讲授', '编程练习', '项目实战'],
+      assessment: '编程作业35% + 项目成果25% + 期末考试40%',
+    },
+    {
+      id: 'cr7',
+      name: 'Linux操作系统',
+      category: '专业基础课',
+      credits: 3,
+      hours: 48,
+      semester: '第2学期',
+      description: 'Linux系统管理、Shell脚本与服务部署',
+      prerequisites: ['cr1'],
+      objectives: ['掌握Linux常用命令与文件管理', '能编写Shell脚本', '了解系统服务管理与网络配置', '具备基本的服务器运维能力'],
+      contents: ['Linux安装与基本命令', '用户与权限管理', 'Shell脚本编程', '软件包管理', '网络配置与防火墙', '服务管理(Nginx/MySQL)'],
+      teachingMethods: ['理实一体化', '上机实操', '案例教学'],
+      assessment: '上机考试40% + Shell脚本作业30% + 期末考试30%',
+    },
+    {
+      id: 'cr8',
+      name: '数据结构与算法',
+      category: '专业基础课',
+      credits: 3,
+      hours: 48,
+      semester: '第2学期',
+      description: '常用数据结构与基本算法思想',
+      prerequisites: ['cr3'],
+      objectives: ['掌握线性表、栈、队列等基本数据结构', '理解树与图的存储与遍历', '掌握排序与查找算法', '能分析算法时间复杂度'],
+      contents: ['线性表与链表', '栈与队列', '树与二叉树', '图的基本算法', '排序算法', '查找算法与哈希'],
+      teachingMethods: ['理论讲授', '编程实践', '算法竞赛'],
+      assessment: '编程作业40% + 算法实践20% + 期末考试40%',
+    },
+    // ---- 第3学期 ----
+    {
+      id: 'cr9',
+      name: 'Vue.js前端框架开发',
+      category: '专业核心课',
+      credits: 4,
+      hours: 64,
+      semester: '第3学期',
+      description: 'Vue 3 + TypeScript企业级前端开发',
+      prerequisites: ['cr5'],
+      objectives: ['掌握Vue 3组合式API', '熟练使用TypeScript开发', '能使用Element Plus等UI库', '能独立开发企业级前端项目'],
+      contents: ['Vue 3核心(响应式/组件/生命周期)', 'Composition API', 'TypeScript集成', 'Vue Router与Pinia', 'Element Plus组件库', '前端工程化(Vite)'],
+      teachingMethods: ['项目驱动', '翻转课堂', '企业案例'],
+      assessment: '项目成果50%(含答辩) + 过程考核20% + 期末考核30%',
+    },
+    {
+      id: 'cr10',
+      name: 'Spring Boot后端开发',
+      category: '专业核心课',
+      credits: 4,
+      hours: 64,
+      semester: '第3学期',
+      description: 'Spring Boot框架与RESTful API开发',
+      prerequisites: ['cr6', 'cr4'],
+      objectives: ['掌握Spring Boot核心特性', '能设计RESTful API接口', '熟练使用MyBatis/JPA操作数据库', '了解Spring Security基础'],
+      contents: ['Spring Boot快速入门', 'IoC/AOP原理', 'MyBatis-Plus持久层', 'RESTful API设计', '统一异常处理与日志', 'JWT认证与权限控制'],
+      teachingMethods: ['理实一体化', '项目驱动', '企业导师'],
+      assessment: '项目成果45%(含答辩) + 实验报告15% + 期末考核40%',
+    },
+    {
+      id: 'cr11',
+      name: '软件工程与项目管理',
+      category: '专业核心课',
+      credits: 3,
+      hours: 48,
+      semester: '第3学期',
+      description: '软件开发流程、敏捷方法与项目管理工具',
+      prerequisites: ['cr3'],
+      objectives: ['理解软件生命周期模型', '掌握敏捷开发方法(Scrum)', '能使用项目管理工具', '具备需求分析与文档编写能力'],
+      contents: ['软件开发模型(瀑布/敏捷)', 'Scrum框架与实践', '需求分析与UML建模', 'Git工作流与代码评审', 'JIRA/禅道项目管理', '软件质量与配置管理'],
+      teachingMethods: ['理论讲授', '案例分析', '模拟项目'],
+      assessment: '模拟项目40% + 文档作业30% + 期末考试30%',
+    },
+    {
+      id: 'cr12',
+      name: '移动应用开发基础',
+      category: '专业核心课',
+      credits: 3,
+      hours: 48,
+      semester: '第3学期',
+      description: 'Flutter/React Native跨平台移动应用开发',
+      prerequisites: ['cr5'],
+      objectives: ['了解移动开发生态', '掌握Flutter/RN开发基础', '能完成跨平台APP开发', '了解应用上架流程'],
+      contents: ['移动开发概述', 'Flutter/Dart基础', 'UI组件与布局', '状态管理', '网络请求与数据持久化', 'APP打包与发布'],
+      teachingMethods: ['项目驱动', '上机实践', '案例教学'],
+      assessment: '项目作品45% + 上机考试25% + 期末考试30%',
+    },
+    // ---- 第4学期 ----
+    {
+      id: 'cr13',
+      name: '前后端分离项目实战',
+      category: '专业核心课',
+      credits: 4,
+      hours: 64,
+      semester: '第4学期',
+      description: 'Vue + Spring Boot全栈项目开发实战',
+      prerequisites: ['cr9', 'cr10'],
+      objectives: ['能独立完成前后端分离项目', '掌握接口联调与跨域处理', '具备项目部署上线能力', '了解前后端协作规范'],
+      contents: ['项目需求分析', '数据库设计与API文档', 'Vue前端开发', 'Spring Boot后端开发', '前后端联调', 'Nginx部署与上线'],
+      teachingMethods: ['项目制学习', '团队协作', '企业导师'],
+      assessment: '项目成果60%(含答辩) + 过程文档20% + 个人贡献20%',
+    },
+    {
+      id: 'cr14',
+      name: 'Docker与容器化部署',
+      category: '专业核心课',
+      credits: 3,
+      hours: 48,
+      semester: '第4学期',
+      description: 'Docker容器技术与微服务部署',
+      prerequisites: ['cr7', 'cr10'],
+      objectives: ['掌握Docker核心概念与操作', '能编写Dockerfile构建镜像', '了解Docker Compose编排', '能使用容器部署Web应用'],
+      contents: ['Docker核心概念', '镜像构建与管理', 'Docker Compose编排', '容器网络与存储', '微服务容器化部署', 'CI/CD流水线集成'],
+      teachingMethods: ['理实一体化', '项目驱动', '企业案例'],
+      assessment: '实操考核45% + 部署方案设计25% + 期末考试30%',
+    },
+    {
+      id: 'cr15',
+      name: 'Python与数据分析',
+      category: 'AI实训课',
+      credits: 3,
+      hours: 48,
+      semester: '第4学期',
+      description: 'Python编程基础与数据处理分析',
+      prerequisites: ['cr4'],
+      objectives: ['掌握Python编程基础', '能使用NumPy/Pandas处理数据', '能进行数据可视化分析', '具备数据驱动决策思维'],
+      contents: ['Python基础语法', 'NumPy数值计算', 'Pandas数据处理', 'Matplotlib/Seaborn可视化', '数据清洗与特征工程', '数据分析项目实战'],
+      teachingMethods: ['翻转课堂', '项目驱动', '在线实训'],
+      assessment: '数据分析项目45% + 编程作业25% + 期末考试30%',
+    },
+    {
+      id: 'cr16',
+      name: '自动化测试技术',
+      category: '专业核心课',
+      credits: 3,
+      hours: 48,
+      semester: '第4学期',
+      description: '软件测试理论与自动化测试实践',
+      prerequisites: ['cr9', 'cr10'],
+      objectives: ['掌握测试基本理论与方法', '能编写自动化测试脚本', '了解性能测试与接口测试', '能使用缺陷管理工具'],
+      contents: ['测试基础理论', '测试用例设计', 'Selenium Web自动化', 'Postman接口测试', 'JMeter性能测试', '持续集成中的测试'],
+      teachingMethods: ['理实一体化', '案例教学', '企业项目'],
+      assessment: '自动化脚本40% + 测试报告30% + 期末考试30%',
+    },
+    // ---- 第5学期 ----
+    {
+      id: 'cr17',
+      name: 'Spring Cloud微服务架构',
+      category: '专业核心课',
+      credits: 4,
+      hours: 64,
+      semester: '第5学期',
+      description: '微服务架构设计与Spring Cloud实践',
+      prerequisites: ['cr10', 'cr14'],
+      objectives: ['理解微服务架构思想', '掌握Spring Cloud核心组件', '能搭建微服务项目', '了解服务治理与分布式事务'],
+      contents: ['微服务架构概论', 'Nacos注册中心与配置', 'Gateway网关', 'OpenFeign服务调用', '分布式事务(Seata)', '链路追踪与限流'],
+      teachingMethods: ['项目驱动', '企业案例', '架构设计研讨'],
+      assessment: '项目成果50%(含答辩) + 过程考核20% + 期末考核30%',
+    },
+    {
+      id: 'cr18',
+      name: 'AI辅助编程实训',
+      category: 'AI实训课',
+      credits: 3,
+      hours: 48,
+      semester: '第5学期',
+      description: 'AI编程助手与大模型API应用开发',
+      prerequisites: ['cr13'],
+      objectives: ['掌握AI编程辅助工具(Copilot等)', '能使用大模型API构建应用', '了解Prompt Engineering', '具备AI时代的编程思维'],
+      contents: ['AI编程助手使用', 'Prompt Engineering', 'LLM API调用与集成', 'RAG应用开发', 'AI Agent基础', 'AI+软件开发项目'],
+      teachingMethods: ['项目驱动', '实训操作', '前沿技术讲座'],
+      assessment: '项目成果55%(含演示) + 过程考核15% + 期末考核30%',
+    },
+    {
+      id: 'cr19',
+      name: 'Kubernetes与云原生',
+      category: '专业拓展课',
+      credits: 3,
+      hours: 48,
+      semester: '第5学期',
+      description: 'Kubernetes集群管理与云原生应用',
+      prerequisites: ['cr14'],
+      objectives: ['掌握K8s核心概念', '能部署与管理K8s集群', '了解Helm与服务网格', '具备云原生架构思维'],
+      contents: ['K8s架构与核心对象', 'Pod/Deployment/Service', 'ConfigMap/Secret管理', 'Helm包管理', '持久化存储', '云原生监控(Prometheus+Grafana)'],
+      teachingMethods: ['理实一体化', '项目驱动', '企业参观'],
+      assessment: '实操考核50% + 部署方案20% + 期末考试30%',
+    },
+    {
+      id: 'cr20',
+      name: '软件综合项目实战',
+      category: 'AI实训课',
+      credits: 4,
+      hours: 64,
+      semester: '第5学期',
+      description: '企业级全栈项目从需求到交付的完整流程',
+      prerequisites: ['cr17', 'cr18'],
+      objectives: ['能完成企业级项目全流程', '具备团队协作与项目管理能力', '能集成AI能力到项目中', '具备产品思维与交付能力'],
+      contents: ['需求调研与原型设计', '技术选型与架构设计', '敏捷迭代开发', 'AI功能集成', '测试与部署上线', '项目路演与答辩'],
+      teachingMethods: ['项目制学习', '企业导师', '敏捷团队', '路演答辩'],
+      assessment: '项目成果60%(含路演) + 过程文档20% + 个人贡献20%',
+    },
+    // ---- 第6学期 ----
+    {
+      id: 'cr21',
+      name: '顶岗实习',
+      category: '专业核心课',
+      credits: 16,
+      hours: 480,
+      semester: '第6学期',
+      description: '在软件企业进行岗位实习实践',
+      prerequisites: ['cr20'],
+      objectives: ['能胜任企业软件开发岗位', '具备职业素养与团队协作能力', '积累行业实践经验', '完成实习报告与总结'],
+      contents: ['岗位技能实践', '企业文化适应', '项目参与', '实习报告撰写'],
+      teachingMethods: ['岗位实践', '企业导师', '校企双导师'],
+      assessment: '企业评价50% + 实习报告30% + 答辩20%',
+    },
+    {
+      id: 'cr22',
+      name: '毕业设计',
+      category: '专业核心课',
+      credits: 6,
+      hours: 120,
+      semester: '第6学期',
+      description: '完成软件技术相关课题的毕业设计与答辩',
+      prerequisites: ['cr20'],
+      objectives: ['能独立完成课题设计与开发', '具备系统架构与编码能力', '能撰写规范毕业论文', '通过毕业答辩'],
+      contents: ['选题与开题', '系统设计与开发', '论文撰写', '毕业答辩'],
+      teachingMethods: ['导师指导', '自主研究'],
+      assessment: '论文质量40% + 系统成果30% + 答辩表现30%',
+    },
+    // ---- 拓展课 ----
+    {
+      id: 'cr23',
+      name: '网络安全基础',
+      category: '专业拓展课',
+      credits: 2,
+      hours: 32,
+      semester: '第4学期',
+      description: 'Web安全、渗透测试与安全防护基础',
+      prerequisites: ['cr7'],
+      objectives: ['了解常见安全漏洞(OWASP Top 10)', '掌握基本安全防护方法', '了解渗透测试流程', '具备安全编码意识'],
+      contents: ['Web安全概论', 'SQL注入与XSS防护', 'CSRF与认证安全', '渗透测试基础', '安全编码规范', '安全工具使用'],
+      teachingMethods: ['理论讲授', '攻防演练', '案例分析'],
+      assessment: '安全实验报告40% + 课堂表现20% + 期末考试40%',
+    },
+    {
+      id: 'cr24',
+      name: '创新创业实践',
+      category: '专业拓展课',
+      credits: 2,
+      hours: 32,
+      semester: '第5学期',
+      description: '软件领域创新项目孵化与创业实践',
+      prerequisites: ['cr13'],
+      objectives: ['了解创新创业基本流程', '能完成商业计划书', '具备产品思维与路演能力', '培养创业精神'],
+      contents: ['创新方法论', '商业模式设计', '产品原型开发', '路演与融资', '创业案例分析'],
+      teachingMethods: ['工作坊', '项目孵化', '导师辅导', '路演答辩'],
+      assessment: '商业计划书40% + 路演答辩40% + 过程参与20%',
+    },
+  ],
+}
+
+// ============================================================
+// Competencies
+// ============================================================
+
+export const competencyMap: Record<string, CompetencyItem[]> = {
+  m1: [
+    { name: 'Web前端开发', value: 90 },
+    { name: 'Java后端开发', value: 85 },
+    { name: '数据库设计', value: 80 },
+    { name: '移动应用开发', value: 72 },
+    { name: 'DevOps运维', value: 68 },
+    { name: '软件测试', value: 75 },
+    { name: 'AI应用集成', value: 65 },
+    { name: '项目管理', value: 70 },
+  ],
+}
+
+export const competencyCategoryMap: Record<string, CompetencyCategory[]> = {
+  m1: [
+    {
+      name: '前端技术',
+      children: [
+        { name: 'HTML5/CSS3', value: 92 },
+        { name: 'JavaScript/TypeScript', value: 88 },
+        { name: 'Vue.js框架', value: 90 },
+        { name: '响应式设计', value: 85 },
       ],
     },
     {
-      id: 'ai-j6',
-      name: '智能体开发工程师',
-      category: '人工智能',
-      matchRate: 65,
-      salaryRange: '18-35万/年',
-      reason: 'Python编程、AI算法、嵌入式系统等课程为构建AI Agent（智能体）应用提供了编程与模型调用基础，大模型智能体是当前AI落地最热门方向之一',
-      relatedCourses: ['Python与数据分析', '机器学习与智能算法', 'AI边缘计算实训'],
-      suggestedCourses: [
-        { name: '大模型应用与智能体开发', reason: '覆盖Prompt工程、RAG检索增强生成、Agent框架（LangChain/Claude SDK）、工具调用与多智能体编排等核心能力' },
-        { name: 'API开发与云服务集成', reason: '补充RESTful API设计、云函数部署、向量数据库使用等智能体工程化落地技能' },
+      name: '后端技术',
+      children: [
+        { name: 'Java编程', value: 85 },
+        { name: 'Spring Boot', value: 82 },
+        { name: 'MySQL数据库', value: 80 },
+        { name: '微服务架构', value: 68 },
+      ],
+    },
+    {
+      name: '运维与部署',
+      children: [
+        { name: 'Linux管理', value: 72 },
+        { name: 'Docker容器化', value: 70 },
+        { name: 'CI/CD流水线', value: 65 },
+        { name: 'K8s编排', value: 55 },
+      ],
+    },
+    {
+      name: '综合能力',
+      children: [
+        { name: '软件测试', value: 75 },
+        { name: '项目管理', value: 70 },
+        { name: 'AI辅助开发', value: 65 },
+        { name: '团队协作', value: 82 },
       ],
     },
   ],
 }
 
-/** 岗位库：所有可选岗位（含已分配和未分配的） */
+// ============================================================
+// Course-Job Links (keyed by course ID)
+// ============================================================
+
+export const courseJobLinkMap: Record<string, CourseJobLink[]> = {
+  cr2: [
+    { jobId: 'j1', jobName: 'Web前端开发工程师', coverage: 60, coveredSkills: ['HTML5/CSS3', '响应式布局'] },
+  ],
+  cr5: [
+    { jobId: 'j1', jobName: 'Web前端开发工程师', coverage: 75, coveredSkills: ['JavaScript', 'DOM操作', 'ES6+'] },
+    { jobId: 'j3', jobName: '移动应用开发工程师', coverage: 40, coveredSkills: ['JavaScript基础'] },
+  ],
+  cr9: [
+    { jobId: 'j1', jobName: 'Web前端开发工程师', coverage: 90, coveredSkills: ['Vue.js', 'TypeScript', '前端工程化', '组件化开发'] },
+  ],
+  cr3: [
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 55, coveredSkills: ['Java基础', '面向对象'] },
+  ],
+  cr6: [
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 65, coveredSkills: ['Java高级', 'IO/多线程', 'JDBC'] },
+  ],
+  cr10: [
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 85, coveredSkills: ['Spring Boot', 'MyBatis', 'RESTful API', 'JWT认证'] },
+    { jobId: 'j5', jobName: '软件测试工程师', coverage: 30, coveredSkills: ['接口规范理解'] },
+  ],
+  cr12: [
+    { jobId: 'j3', jobName: '移动应用开发工程师', coverage: 80, coveredSkills: ['Flutter/RN', 'UI组件', '状态管理', 'APP发布'] },
+  ],
+  cr14: [
+    { jobId: 'j4', jobName: 'DevOps工程师', coverage: 75, coveredSkills: ['Docker', 'Docker Compose', '容器化部署', 'CI/CD'] },
+  ],
+  cr7: [
+    { jobId: 'j4', jobName: 'DevOps工程师', coverage: 60, coveredSkills: ['Linux管理', 'Shell脚本', '服务管理'] },
+  ],
+  cr19: [
+    { jobId: 'j4', jobName: 'DevOps工程师', coverage: 85, coveredSkills: ['Kubernetes', 'Helm', '云原生监控', '集群管理'] },
+  ],
+  cr16: [
+    { jobId: 'j5', jobName: '软件测试工程师', coverage: 88, coveredSkills: ['测试理论', 'Selenium自动化', '接口测试', '性能测试'] },
+  ],
+  cr15: [
+    { jobId: 'j6', jobName: '数据开发工程师', coverage: 65, coveredSkills: ['Python', 'Pandas', '数据分析', '数据可视化'] },
+  ],
+  cr4: [
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 50, coveredSkills: ['SQL', '数据库设计'] },
+    { jobId: 'j6', jobName: '数据开发工程师', coverage: 55, coveredSkills: ['SQL', '数据建模'] },
+  ],
+  cr13: [
+    { jobId: 'j1', jobName: 'Web前端开发工程师', coverage: 70, coveredSkills: ['全栈项目', '前后端联调'] },
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 70, coveredSkills: ['全栈项目', 'API开发'] },
+  ],
+  cr17: [
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 78, coveredSkills: ['微服务', 'Spring Cloud', '服务治理'] },
+    { jobId: 'j4', jobName: 'DevOps工程师', coverage: 50, coveredSkills: ['微服务部署', '服务发现'] },
+  ],
+  cr18: [
+    { jobId: 'j1', jobName: 'Web前端开发工程师', coverage: 45, coveredSkills: ['AI辅助编程', 'LLM集成'] },
+    { jobId: 'j2', jobName: 'Java后端开发工程师', coverage: 45, coveredSkills: ['AI辅助编程', 'RAG应用'] },
+  ],
+}
+
+// ============================================================
+// Learning Tasks (keyed by course ID)
+// ============================================================
+
+export const learningTaskMap: Record<string, LearningTask[]> = {
+  cr9: [
+    { id: 'lt-cr9-1', name: '组件化开发实战', knowledge: ['Vue组件', '响应式原理'], qualities: ['代码规范'], generalSkills: ['编程能力'], professionalSkills: ['前端组件设计'] },
+    { id: 'lt-cr9-2', name: '状态管理与路由', knowledge: ['Pinia', 'Vue Router'], qualities: ['架构思维'], generalSkills: ['系统设计'], professionalSkills: ['SPA应用架构'] },
+    { id: 'lt-cr9-3', name: '企业级项目实战', knowledge: ['TypeScript', 'Element Plus'], qualities: ['团队协作'], generalSkills: ['项目管理'], professionalSkills: ['前端工程化'] },
+  ],
+  cr10: [
+    { id: 'lt-cr10-1', name: 'API接口开发', knowledge: ['Spring Boot', 'RESTful'], qualities: ['规范意识'], generalSkills: ['接口设计'], professionalSkills: ['后端API开发'] },
+    { id: 'lt-cr10-2', name: '持久层与数据库', knowledge: ['MyBatis-Plus', 'MySQL'], qualities: ['严谨性'], generalSkills: ['数据建模'], professionalSkills: ['ORM框架使用'] },
+    { id: 'lt-cr10-3', name: '认证与安全', knowledge: ['JWT', 'Spring Security'], qualities: ['安全意识'], generalSkills: ['安全防护'], professionalSkills: ['认证授权实现'] },
+  ],
+  cr13: [
+    { id: 'lt-cr13-1', name: '全栈项目架构设计', knowledge: ['前后端分离', 'API规范'], qualities: ['架构思维'], generalSkills: ['系统设计'], professionalSkills: ['全栈架构'] },
+    { id: 'lt-cr13-2', name: '前后端联调与部署', knowledge: ['Nginx', '跨域处理'], qualities: ['解决问题'], generalSkills: ['调试能力'], professionalSkills: ['项目部署'] },
+  ],
+  cr14: [
+    { id: 'lt-cr14-1', name: '容器镜像构建', knowledge: ['Dockerfile', '多阶段构建'], qualities: ['精益求精'], generalSkills: ['工具使用'], professionalSkills: ['容器化构建'] },
+    { id: 'lt-cr14-2', name: '编排与CI/CD', knowledge: ['Docker Compose', 'Jenkins'], qualities: ['自动化思维'], generalSkills: ['流程设计'], professionalSkills: ['持续交付'] },
+  ],
+  cr17: [
+    { id: 'lt-cr17-1', name: '微服务拆分与治理', knowledge: ['Spring Cloud', 'Nacos'], qualities: ['架构思维'], generalSkills: ['系统设计'], professionalSkills: ['微服务架构'] },
+    { id: 'lt-cr17-2', name: '网关与分布式', knowledge: ['Gateway', 'Seata'], qualities: ['全局视野'], generalSkills: ['分布式思维'], professionalSkills: ['分布式系统'] },
+  ],
+  cr18: [
+    { id: 'lt-cr18-1', name: 'AI编程助手应用', knowledge: ['Copilot', 'Prompt'], qualities: ['创新思维'], generalSkills: ['AI工具使用'], professionalSkills: ['AI辅助编程'] },
+    { id: 'lt-cr18-2', name: 'LLM应用开发', knowledge: ['LLM API', 'RAG'], qualities: ['前沿意识'], generalSkills: ['API集成'], professionalSkills: ['AI应用开发'] },
+  ],
+}
+
+// ============================================================
+// Job Catalog (additional jobs for picker)
+// ============================================================
+
 export const jobCatalog: JobMatch[] = [
-  // 已有的8个岗位会从 jobMatchMap 合并
-  // 以下为额外可选岗位
   {
     id: 'jc1',
-    name: '单片机开发工程师',
-    category: '技术开发',
-    matchRate: 86,
-    salaryRange: '7-12万/年',
-    demand: '高',
-    skills: ['STM32', '51单片机', 'Keil开发', '外设驱动'],
-    profile: { education: '大专及以上', experience: '0-2年', level: '初级岗位', demandCount: 19200, careerPath: '单片机工程师 → 嵌入式工程师 → 系统架构师', tasks: ['编写单片机程序', '调试外设接口', '硬件联调'], tools: ['Keil MDK', 'STM32CubeIDE', '示波器'], skills: ['STM32开发', 'C语言编程', '外设驱动'], qualities: ['逻辑思维', '动手能力', '细心'] },
+    name: '产品经理助理',
+    category: '项目管理',
+    matchRate: 55,
+    salaryRange: '8-14K',
+    demand: '中',
+    skills: ['需求分析', '原型设计', 'Axure', '用户研究'],
+    profile: {
+      education: '大专及以上', experience: '0-1年', level: '初级', demandCount: 900,
+      careerPath: '产品助理→产品经理→高级产品→产品总监',
+      tasks: ['编写需求文档', '绘制原型图', '竞品分析', '用户调研'],
+      tools: ['Axure', 'Figma', '墨刀', 'JIRA'],
+      skills: ['需求分析', '原型设计', '数据分析', '沟通表达'],
+      qualities: ['同理心', '逻辑思维', '沟通力', '用户视角'],
+    },
   },
   {
     id: 'jc2',
-    name: '电气工程师',
-    category: '硬件设计',
-    matchRate: 74,
-    salaryRange: '8-14万/年',
+    name: '技术支持工程师',
+    category: '项目管理',
+    matchRate: 60,
+    salaryRange: '7-12K',
     demand: '中',
-    skills: ['电气设计', 'PLC编程', '电气安全', 'CAD制图'],
-    profile: { education: '大专及以上', experience: '1-3年', level: '初级岗位', demandCount: 22000, careerPath: '电气工程师 → 高级电气工程师 → 电气主管', tasks: ['电气方案设计', 'PLC程序编写', '电气调试'], tools: ['AutoCAD', 'EPLAN', 'PLC编程器'], skills: ['电气设计', 'PLC编程', '电气安全规范'], qualities: ['安全意识', '责任心', '规范意识'] },
+    skills: ['问题排查', '文档编写', '客户沟通', '系统维护'],
+    profile: {
+      education: '大专及以上', experience: '0-1年', level: '初级', demandCount: 1200,
+      careerPath: '技术支持→高级技术支持→售前工程师→解决方案架构师',
+      tasks: ['处理客户技术问题', '编写技术文档', '部署与维护系统', '收集产品改进需求'],
+      tools: ['工单系统', 'VPN', '远程协助工具', 'Confluence'],
+      skills: ['问题诊断', '文档能力', '系统管理', '网络基础'],
+      qualities: ['耐心', '沟通力', '服务意识', '快速学习'],
+    },
   },
   {
     id: 'jc3',
-    name: '通信工程师',
-    category: '技术开发',
-    matchRate: 70,
-    salaryRange: '8-16万/年',
+    name: 'UI/UX设计师',
+    category: 'Web前端开发',
+    matchRate: 45,
+    salaryRange: '8-16K',
     demand: '中',
-    skills: ['通信协议', '射频设计', '网络规划', '信号处理'],
-    profile: { education: '本科及以上', experience: '1-3年', level: '中级岗位', demandCount: 14500, careerPath: '通信工程师 → 高级通信工程师 → 通信架构师', tasks: ['通信系统设计', '协议调试', '网络规划优化'], tools: ['频谱分析仪', 'Wireshark', '仿真软件'], skills: ['通信协议', '射频调试', '网络优化'], qualities: ['分析能力', '英文能力', '学习能力'] },
+    skills: ['Figma', '交互设计', '用户体验', '设计系统'],
+    profile: {
+      education: '大专及以上', experience: '0-2年', level: '初级/中级', demandCount: 1100,
+      careerPath: 'UI设计师→高级设计师→设计主管→设计总监',
+      tasks: ['界面视觉设计', '交互原型制作', '设计规范维护', '用户可用性测试'],
+      tools: ['Figma', 'Sketch', 'Adobe XD', 'Principle'],
+      skills: ['视觉设计', '交互设计', '设计系统', '用户研究'],
+      qualities: ['审美能力', '细致耐心', '同理心', '创新思维'],
+    },
   },
   {
     id: 'jc4',
-    name: '技术支持工程师',
-    category: '运维服务',
-    matchRate: 76,
-    salaryRange: '6-10万/年',
-    demand: '高',
-    skills: ['技术支持', '问题排查', '客户沟通', '文档编写'],
-    profile: { education: '大专及以上', experience: '0-2年', level: '初级岗位', demandCount: 28000, careerPath: '技术支持 → 高级技术支持 → 技术支持经理', tasks: ['客户技术问题响应', '故障分析与解决', '技术文档编写'], tools: ['工单系统', '远程工具', 'Office'], skills: ['故障排查', '技术讲解', '文档编写'], qualities: ['服务意识', '耐心', '沟通能力'] },
-  },
-  {
-    id: 'jc5',
-    name: '自动化测试工程师',
-    category: '质量检测',
-    matchRate: 72,
-    salaryRange: '8-15万/年',
+    name: '网络安全工程师',
+    category: 'DevOps运维',
+    matchRate: 50,
+    salaryRange: '10-20K',
     demand: '中',
-    skills: ['自动化框架', 'Python脚本', 'LabVIEW', '测试方案'],
-    profile: { education: '大专及以上', experience: '1-3年', level: '初级岗位', demandCount: 11000, careerPath: '自动化测试工程师 → 测试架构师 → 质量总监', tasks: ['搭建自动化测试平台', '编写测试脚本', '分析测试数据'], tools: ['LabVIEW', 'Python', 'TestStand', 'Jenkins'], skills: ['自动化脚本', '测试方案设计', '数据分析'], qualities: ['编程能力', '逻辑思维', '质量意识'] },
-  },
-  {
-    id: 'jc6',
-    name: '智能制造工程师',
-    category: '系统集成',
-    matchRate: 65,
-    salaryRange: '9-16万/年',
-    demand: '中',
-    skills: ['MES系统', '工业机器人', '产线自动化', '工艺优化'],
-    profile: { education: '本科及以上', experience: '2-5年', level: '中级岗位', demandCount: 9500, careerPath: '智能制造工程师 → 高级制造工程师 → 制造总监', tasks: ['产线自动化方案设计', 'MES系统实施', '工艺改善'], tools: ['MES系统', 'PLC', '工业机器人示教器'], skills: ['产线规划', 'MES配置', '工艺优化'], qualities: ['系统思维', '工程实践', '改善意识'] },
-  },
-  {
-    id: 'jc7',
-    name: '售前技术工程师',
-    category: '产品管理',
-    matchRate: 60,
-    salaryRange: '8-15万/年',
-    demand: '中',
-    skills: ['方案设计', '技术演示', '客户需求', '招投标'],
-    profile: { education: '大专及以上', experience: '1-3年', level: '中级岗位', demandCount: 7800, careerPath: '售前工程师 → 售前总监 → 解决方案VP', tasks: ['技术方案编写', '客户需求调研', '招投标支持'], tools: ['PowerPoint', 'Visio', 'Office'], skills: ['方案设计', '技术演示', '客户沟通'], qualities: ['表达能力', '商业敏感', '学习能力'] },
-  },
-  {
-    id: 'jc8',
-    name: '机器视觉工程师',
-    category: '人工智能',
-    matchRate: 62,
-    salaryRange: '10-20万/年',
-    demand: '高',
-    skills: ['OpenCV', '图像处理', '深度学习', '缺陷检测'],
-    profile: { education: '本科及以上', experience: '1-3年', level: '中级岗位', demandCount: 13000, careerPath: '视觉工程师 → 高级视觉工程师 → 算法总监', tasks: ['视觉算法开发', '缺陷检测系统搭建', '模型训练部署'], tools: ['OpenCV', 'PyTorch', 'Halcon', 'Python'], skills: ['图像处理', '深度学习', '模型部署'], qualities: ['数学基础', '创新思维', '持续学习'] },
+    skills: ['渗透测试', '安全防护', '日志分析', '应急响应'],
+    profile: {
+      education: '大专及以上', experience: '1-3年', level: '中级', demandCount: 800,
+      careerPath: '安全工程师→高级安全→安全架构师→CSO',
+      tasks: ['安全漏洞扫描与修复', '渗透测试', '安全事件响应', '安全策略制定'],
+      tools: ['Nmap', 'Burp Suite', 'Wireshark', 'WAF'],
+      skills: ['Web安全', '网络协议', '渗透测试', '安全编码'],
+      qualities: ['严谨', '好奇心', '责任心', '持续学习'],
+    },
   },
 ]
 
-/** 已创建课程的 ID 集合（模拟状态，部分课程预设为已创建） */
-export const createdCourseIds = ref(new Set([
-  'c1', 'c2', 'c3', 'c5', 'c6', 'c8', 'c10', 'c13',
-]))
+// ============================================================
+// AI Recommended Jobs
+// ============================================================
 
-/** 待定课程（AI 推荐岗位建议新增的课程） */
-export const pendingCourses = ref<Course[]>([])
+export const aiRecommendedJobMap: Record<string, AiRecommendedJob[]> = {
+  m1: [
+    {
+      id: 'ai-j1',
+      name: '低代码平台开发工程师',
+      category: 'Web前端开发',
+      matchRate: 72,
+      salaryRange: '12-22K',
+      reason: '结合前端框架与可视化拖拽技术，低代码平台是深圳企业数字化转型的热门方向',
+      relatedCourses: ['Vue.js前端框架开发', '前后端分离项目实战'],
+      suggestedCourses: [
+        { name: '可视化编辑器开发', reason: '低代码平台核心技术，需要掌握拖拽引擎与DSL设计' },
+      ],
+    },
+    {
+      id: 'ai-j2',
+      name: 'AI应用开发工程师',
+      category: 'Web前端开发',
+      matchRate: 68,
+      salaryRange: '15-30K',
+      reason: '大模型应用开发是2024-2025最热门方向，深圳AI产业生态成熟',
+      relatedCourses: ['AI辅助编程实训', 'Python与数据分析'],
+      suggestedCourses: [
+        { name: 'LangChain应用开发', reason: '企业级AI应用开发框架，市场需求激增' },
+      ],
+    },
+    {
+      id: 'ai-j3',
+      name: '全栈独立开发者',
+      category: 'Java后端开发',
+      matchRate: 65,
+      salaryRange: '自由定价',
+      reason: 'AI降低了全栈开发门槛，独立开发者可快速构建和变现SaaS产品',
+      relatedCourses: ['前后端分离项目实战', 'AI辅助编程实训', 'Docker与容器化部署'],
+    },
+    {
+      id: 'ai-j4',
+      name: 'SRE可靠性工程师',
+      category: 'DevOps运维',
+      matchRate: 62,
+      salaryRange: '15-30K',
+      reason: '从DevOps进阶，SRE是互联网大厂高薪岗位，深圳头部企业需求旺盛',
+      relatedCourses: ['Kubernetes与云原生', 'Docker与容器化部署'],
+      suggestedCourses: [
+        { name: '可观测性与故障排查', reason: 'SRE核心能力，涉及Prometheus/Grafana/链路追踪体系' },
+      ],
+    },
+  ],
+}
+
+// ============================================================
+// AI Insights
+// ============================================================
 
 export const aiInsights = [
-  '**嵌入式软件工程师**岗位匹配度最高（92%），是电子信息工程技术专业最对口的核心岗位，建议作为人才培养方案的主要对标岗位',
-  '**PCB设计工程师**和**电子产品测试工程师**需求量大且稳定增长，高职可重点培养**硬件设计与测试**方向',
-  '建议专业群培养重心向**嵌入式开发**和**PCB设计**方向倾斜，对接技术服务层岗位需求',
-  '**AI边缘计算工程师**是最适合高职毕业生的新兴岗位（大专可，**12-22万/年**），需求量**8,600个**且持续增长',
+  '深圳软件技术专业就业率连续5年超过98%，薪资水平位居全国高职前列',
+  '本专业毕业生中，45%进入Web开发岗位，25%从事后端开发，15%选择DevOps方向',
+  '建议加强AI辅助开发与低代码平台相关课程，对接产业需求增长点',
+  '深圳企业对全栈工程师需求增长显著，前后端分离项目实战课程覆盖核心能力',
+  '微服务架构与云原生技术在深圳互联网企业的覆盖率已超过80%',
 ]
+
+// ============================================================
+// Reactive state
+// ============================================================
+
+export const createdCourseIds = ref<Set<string>>(
+  new Set(['cr1', 'cr2', 'cr3', 'cr4', 'cr5', 'cr6', 'cr7', 'cr8', 'cr9', 'cr10', 'cr11', 'cr12', 'cr13', 'cr14', 'cr15', 'cr16'])
+)
+
+export const pendingCourses = ref<Course[]>([
+  {
+    id: 'pending-1',
+    name: 'LangChain应用开发',
+    category: 'AI实训课',
+    credits: 3,
+    hours: 48,
+    semester: '第5学期',
+    description: 'AI建议：基于大模型应用开发岗位需求，建议新增LangChain框架课程，覆盖RAG、Agent、Tool Use等核心概念',
+  },
+  {
+    id: 'pending-2',
+    name: '低代码平台开发',
+    category: '专业拓展课',
+    credits: 3,
+    hours: 48,
+    semester: '第5学期',
+    description: 'AI建议：低代码/无代码平台是企业数字化转型热点，建议新增可视化编辑器与DSL设计课程',
+  },
+])

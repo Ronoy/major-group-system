@@ -47,7 +47,7 @@
         </div>
         <div class="stat-card stat-card--accent">
           <div class="stat-card__value">{{ stats.avgCoverage }}<span class="stat-card__unit">%</span></div>
-          <div class="stat-card__label">平均覆盖度</div>
+          <div class="stat-card__label">平均覆盖度 <CircleAlert :size="13" :stroke-width="2" class="coverage-info-icon" @click="coverageRuleVisible = true" /></div>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
         <!-- 岗位覆盖率 -->
         <div class="stats-section">
           <div class="stats-section__header">
-            <span class="stats-section__title">岗位课程覆盖率</span>
+            <span class="stats-section__title">岗位课程覆盖率 <CircleAlert :size="13" :stroke-width="2" class="coverage-info-icon" @click="coverageRuleVisible = true" /></span>
             <span class="stats-section__sub">每个岗位被课程覆盖的程度</span>
           </div>
           <div class="coverage-bars">
@@ -78,7 +78,7 @@
         <!-- 课程关联度 -->
         <div class="stats-section">
           <div class="stats-section__header">
-            <span class="stats-section__title">课程岗位关联度</span>
+            <span class="stats-section__title">课程岗位关联度 <CircleAlert :size="13" :stroke-width="2" class="coverage-info-icon" @click="coverageRuleVisible = true" /></span>
             <span class="stats-section__sub">每门课程关联的岗位数与平均覆盖度</span>
           </div>
           <div class="coverage-bars">
@@ -118,19 +118,78 @@
       </div>
     </div>
   </div>
+
+  <!-- 覆盖度计算规则弹窗 -->
+  <el-dialog
+    v-model="coverageRuleVisible"
+    title="岗位能力覆盖度计算规则"
+    width="560px"
+    append-to-body
+    destroy-on-close
+    align-center
+  >
+    <div class="rule-dialog">
+      <div class="rule-section">
+        <h4 class="rule-section__title">计算公式</h4>
+        <div class="rule-formula">
+          覆盖度 = （课程覆盖的岗位技能点数 ÷ 岗位要求总技能点数）× 100%
+        </div>
+      </div>
+      <div class="rule-section">
+        <h4 class="rule-section__title">指标说明</h4>
+        <div class="rule-items">
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #3658FF" />
+            <span class="rule-item__label">岗位课程覆盖率</span>
+            <span class="rule-item__desc">衡量每个岗位所需技能被现有课程体系覆盖的比例，反映课程设置对岗位需求的满足程度</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #F5A623" />
+            <span class="rule-item__label">课程岗位关联度</span>
+            <span class="rule-item__desc">衡量每门课程关联的岗位数量及平均覆盖深度，反映课程的岗位支撑广度</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-item__dot" style="background: #22C55E" />
+            <span class="rule-item__label">平均覆盖度</span>
+            <span class="rule-item__desc">所有课-岗关联覆盖度的加权平均值，综合反映专业对目标岗位群的整体支撑水平</span>
+          </div>
+        </div>
+      </div>
+      <div class="rule-section">
+        <h4 class="rule-section__title">覆盖度等级</h4>
+        <div class="rule-levels">
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #22C55E; width: 100%" />
+            <span class="rule-level__text">≥ 70%　高覆盖 — 课程与岗位高度契合</span>
+          </div>
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #F5A623; width: 60%" />
+            <span class="rule-level__text">40%-69%　中覆盖 — 有一定支撑，建议补充</span>
+          </div>
+          <div class="rule-level">
+            <span class="rule-level__bar" style="background: #9CA3AF; width: 30%" />
+            <span class="rule-level__text">＜ 40%　低覆盖 — 需重点加强课程建设</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { use } from 'echarts/core'
 import { GraphChart } from 'echarts/charts'
 import { TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
+import { CircleAlert } from 'lucide-vue-next'
 import type { JobMatch, Course } from '../data/majors'
 import { courseJobLinkMap } from '../data/majors'
 
 use([GraphChart, TooltipComponent, CanvasRenderer])
+
+const coverageRuleVisible = ref(false)
 
 const props = defineProps<{
   jobs: JobMatch[]
@@ -600,6 +659,99 @@ const chartOption = computed(() => {
       font-weight: 700;
       color: var(--iflyv-text-1);
     }
+  }
+}
+
+.coverage-info-icon {
+  color: var(--iflyv-text-4);
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 2px;
+  transition: color 0.15s;
+
+  &:hover {
+    color: var(--iflyv-brand-primary);
+  }
+}
+
+.rule-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iflyv-spacing-5);
+}
+
+.rule-section {
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--iflyv-text-1);
+    margin: 0 0 var(--iflyv-spacing-3);
+  }
+}
+
+.rule-formula {
+  padding: 14px 18px;
+  background: var(--iflyv-brand-bg);
+  border-radius: var(--iflyv-radius-smallmodule);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--iflyv-brand-primary);
+  text-align: center;
+}
+
+.rule-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--iflyv-text-1);
+    white-space: nowrap;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--iflyv-text-3);
+  }
+}
+
+.rule-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__bar {
+    height: 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    max-width: 120px;
+  }
+
+  &__text {
+    font-size: 13px;
+    color: var(--iflyv-text-2);
   }
 }
 </style>
