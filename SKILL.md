@@ -15,7 +15,7 @@ Generate a production-grade Vue 3 frontend for managing vocational college major
 
 ## Reference Implementation
 
-The canonical reference project lives at `/Users/Ronoy/major-group-system`. When generating a new project, read components from this reference to ensure fidelity. The reference contains 13+ Vue components, a complete design token system, and ECharts visualizations.
+The canonical reference project lives at `./major-group-system`. When generating a new project, read components from this reference to ensure fidelity. The reference contains 13+ Vue components, a complete design token system, and ECharts visualizations.
 
 ## Step 1: Gather Input
 
@@ -151,13 +151,26 @@ If the user provides a raw training plan document:
 ```bash
 npm install
 npm install vue@^3.5 element-plus echarts vue-echarts lucide-vue-next sass --save
-npm install vite @vitejs/plugin-vue vue-tsc typescript --save-dev
+npm install vite @vitejs/plugin-vue vue-tsc typescript vite-plugin-singlefile --save-dev
+```
+
+Configure `vite.config.ts` for single-file output (all JS/CSS inlined into one HTML, openable without a server):
+
+```typescript
+import { viteSingleFile } from 'vite-plugin-singlefile'
+
+export default defineConfig({
+  base: './',
+  plugins: [vue(), viteSingleFile()],
+  build: { cssCodeSplit: false },
+})
 ```
 
 Then verify:
 ```bash
 npx vue-tsc --noEmit    # Type check
-npx vite build           # Production build
+npx vite build           # Production build → dist/index.html (~2MB, self-contained)
+open dist/index.html     # Double-click to open, no server needed
 ```
 
 ## Key Architecture Decisions
