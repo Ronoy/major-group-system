@@ -1,0 +1,412 @@
+@use './font.scss';
+
+/* ======================================================================== */
+/* ========================= 第一层：基础色板 ============================= */
+/* ======================================================================== */
+
+/* ==================== 中性色 Gray ==================== */
+$gray-0: #FFFFFF;
+$gray-1: #F5F5F5;
+$gray-2: #C6C6C6;
+$gray-3: #AFAFAF;
+$gray-4: #9C9C9C;
+$gray-5: #828282;
+$gray-6: #696969;
+$gray-7: #525252;
+$gray-8: #434343;
+$gray-9: #2C2C2C;
+$gray-10: #151515;
+
+/* ==================== 功能色板 ==================== */
+/* 由 @ant-design/colors generate(base) 生成，base 取色阶 6 */
+
+/* ==================== 绿色系 Green (base: #23B283) ==================== */
+$green-1: #E4F2EB;
+$green-2: #C1E6D4;
+$green-3: #93D9BB;
+$green-4: #6ACCA5;
+$green-5: #45BF92;
+$green-6: #23B283;
+$green-7: #158C68;
+$green-8: #0A664E;
+$green-9: #034032;
+$green-10: #011A15;
+
+/* ==================== 红色系 Red (base: #F53B3B) ==================== */
+$red-1: #FFF2F0;
+$red-2: #FFE4E0;
+$red-3: #FFBFB8;
+$red-4: #FF968F;
+$red-5: #FF6B66;
+$red-6: #F53B3B;
+$red-7: #CF272D;
+$red-8: #A81821;
+$red-9: #820C18;
+$red-10: #5C0713;
+
+/* ==================== 橙色系 Orange (base: #FC7819) ==================== */
+$orange-1: #FFF4E6;
+$orange-2: #FFE1BD;
+$orange-3: #FFCB94;
+$orange-4: #FFB36B;
+$orange-5: #FF9742;
+$orange-6: #FC7819;
+$orange-7: #D6590B;
+$orange-8: #B03E00;
+$orange-9: #8A2C00;
+$orange-10: #631C00;
+
+/* ==================== 蓝色系 Blue (base: #0077FF) ==================== */
+$blue-1: #E6F6FF;
+$blue-2: #A3DAFF;
+$blue-3: #7AC6FF;
+$blue-4: #52AEFF;
+$blue-5: #2994FF;
+$blue-6: #0077FF;
+$blue-7: #005ED9;
+$blue-8: #0047B3;
+$blue-9: #00338C;
+$blue-10: #002266;
+
+/* ==================== 极客蓝系 GeekBlue (base: #3658FF) ==================== */
+$geekblue-1: #F0F5FF;
+$geekblue-2: #D9E4FF;
+$geekblue-3: #B0C5FF;
+$geekblue-4: #87A3FF;
+$geekblue-5: #5E7EFF;
+$geekblue-6: #3658FF;
+$geekblue-7: #233BD9;
+$geekblue-8: #1424B3;
+$geekblue-9: #08118C;
+$geekblue-10: #050866;
+
+/* ==================== 其他基础变量 ==================== */
+$bg-card-gradient-end: #FAFAFA;
+$border-primary-fallback: rgba(21, 21, 21, 0.1);
+$border-darkbg-fallback: rgba(255, 255, 255, 0.1);
+$mask-primary-fallback: rgba(21, 21, 21, 0.6);
+$mask-darkbg-fallback: rgba(255, 255, 255, 0.6);
+$scroller-primary-fallback: rgba(21, 21, 21, 0.1);
+$scroller-hover-fallback: rgba(21, 21, 21, 0.3);
+$shadow-hover-color: rgba(21, 21, 21, 0.06);
+$shadow-related-color: rgba(21, 21, 21, 0.08);
+$shadow-independent-color: rgba(21, 21, 21, 0.1);
+
+$loading-path: '/frontend-static/static/localization/public/loading.svg';
+
+/* ======================================================================== */
+/* ===================== 基础色板 CSS 变量 ================================ */
+/* ======================================================================== */
+
+:root {
+  /* ==================== 灰阶染色色 Gray Tint ==================== */
+  /* 品牌色色相偏移 -20°，让灰色"蓝调而非紫调"，层次更丰富 */
+  --iflyv-gray-tint: var(--iflyv-brand-primary);                                            /* 降级：直接用品牌色 */
+  --iflyv-gray-tint: oklch(from var(--iflyv-brand-primary) l c calc(h - 20));               /* 现代：色相偏移 */
+
+  /* ==================== 中性色 Gray ==================== */
+  /* 染色曲线：两端轻（2%）中间重（4%），模拟手调灰阶的自然过渡 */
+  --iflyv-gray-0: #{$gray-0};
+
+  --iflyv-gray-1: #{$gray-1};                                                               /* 降级 */
+  --iflyv-gray-1: color-mix(in oklch, #{$gray-1} 98%, var(--iflyv-gray-tint) 2%);          /* 现代 */
+
+  --iflyv-gray-2: #{$gray-2};                                                               /* 降级 */
+  --iflyv-gray-2: color-mix(in oklch, #{$gray-2} 97%, var(--iflyv-gray-tint) 3%);          /* 现代 */
+
+  --iflyv-gray-3: #{$gray-3};                                                               /* 降级 */
+  --iflyv-gray-3: color-mix(in oklch, #{$gray-3} 96%, var(--iflyv-gray-tint) 4%);          /* 现代 */
+
+  --iflyv-gray-4: #{$gray-4};                                                               /* 降级 */
+  --iflyv-gray-4: color-mix(in oklch, #{$gray-4} 96%, var(--iflyv-gray-tint) 4%);          /* 现代 */
+
+  --iflyv-gray-5: #{$gray-5};                                                               /* 降级 */
+  --iflyv-gray-5: color-mix(in oklch, #{$gray-5} 96%, var(--iflyv-gray-tint) 4%);          /* 现代 */
+
+  --iflyv-gray-6: #{$gray-6};                                                               /* 降级 */
+  --iflyv-gray-6: color-mix(in oklch, #{$gray-6} 96%, var(--iflyv-gray-tint) 4%);          /* 现代 */
+
+  --iflyv-gray-7: #{$gray-7};                                                               /* 降级 */
+  --iflyv-gray-7: color-mix(in oklch, #{$gray-7} 96%, var(--iflyv-gray-tint) 4%);          /* 现代 */
+
+  --iflyv-gray-8: #{$gray-8};                                                               /* 降级 */
+  --iflyv-gray-8: color-mix(in oklch, #{$gray-8} 97%, var(--iflyv-gray-tint) 3%);          /* 现代 */
+
+  --iflyv-gray-9: #{$gray-9};                                                               /* 降级 */
+  --iflyv-gray-9: color-mix(in oklch, #{$gray-9} 97%, var(--iflyv-gray-tint) 3%);          /* 现代 */
+
+  --iflyv-gray-10: #{$gray-10};                                                              /* 降级 */
+  --iflyv-gray-10: color-mix(in oklch, #{$gray-10} 98%, var(--iflyv-gray-tint) 2%);         /* 现代 */
+
+  /* ==================== 绿色系 Green ==================== */
+  --iflyv-green-1: #{$green-1};
+  --iflyv-green-2: #{$green-2};
+  --iflyv-green-3: #{$green-3};
+  --iflyv-green-4: #{$green-4};
+  --iflyv-green-5: #{$green-5};
+  --iflyv-green-6: #{$green-6};
+  --iflyv-green-7: #{$green-7};
+  --iflyv-green-8: #{$green-8};
+  --iflyv-green-9: #{$green-9};
+  --iflyv-green-10: #{$green-10};
+
+  /* ==================== 红色系 Red ==================== */
+  --iflyv-red-1: #{$red-1};
+  --iflyv-red-2: #{$red-2};
+  --iflyv-red-3: #{$red-3};
+  --iflyv-red-4: #{$red-4};
+  --iflyv-red-5: #{$red-5};
+  --iflyv-red-6: #{$red-6};
+  --iflyv-red-7: #{$red-7};
+  --iflyv-red-8: #{$red-8};
+  --iflyv-red-9: #{$red-9};
+  --iflyv-red-10: #{$red-10};
+
+  /* ==================== 橙色系 Orange ==================== */
+  --iflyv-orange-1: #{$orange-1};
+  --iflyv-orange-2: #{$orange-2};
+  --iflyv-orange-3: #{$orange-3};
+  --iflyv-orange-4: #{$orange-4};
+  --iflyv-orange-5: #{$orange-5};
+  --iflyv-orange-6: #{$orange-6};
+  --iflyv-orange-7: #{$orange-7};
+  --iflyv-orange-8: #{$orange-8};
+  --iflyv-orange-9: #{$orange-9};
+  --iflyv-orange-10: #{$orange-10};
+
+  /* ==================== 蓝色系 Blue ==================== */
+  --iflyv-blue-1: #{$blue-1};
+  --iflyv-blue-2: #{$blue-2};
+  --iflyv-blue-3: #{$blue-3};
+  --iflyv-blue-4: #{$blue-4};
+  --iflyv-blue-5: #{$blue-5};
+  --iflyv-blue-6: #{$blue-6};
+  --iflyv-blue-7: #{$blue-7};
+  --iflyv-blue-8: #{$blue-8};
+  --iflyv-blue-9: #{$blue-9};
+  --iflyv-blue-10: #{$blue-10};
+
+  /* ==================== 极客蓝系 GeekBlue ==================== */
+  --iflyv-geekblue-1: #{$geekblue-1};
+  --iflyv-geekblue-2: #{$geekblue-2};
+  --iflyv-geekblue-3: #{$geekblue-3};
+  --iflyv-geekblue-4: #{$geekblue-4};
+  --iflyv-geekblue-5: #{$geekblue-5};
+  --iflyv-geekblue-6: #{$geekblue-6};
+  --iflyv-geekblue-7: #{$geekblue-7};
+  --iflyv-geekblue-8: #{$geekblue-8};
+  --iflyv-geekblue-9: #{$geekblue-9};
+  --iflyv-geekblue-10: #{$geekblue-10};
+
+  /* ==================== 品牌色板别名 Accent（默认 → GeekBlue） ==================== */
+  /* 品牌色定制时通过 [data-brand] 重定向此别名，所有语义变量和 EP 映射自动级联 */
+  --iflyv-accent-1: var(--iflyv-geekblue-1);
+  --iflyv-accent-2: var(--iflyv-geekblue-2);
+  --iflyv-accent-3: var(--iflyv-geekblue-3);
+  --iflyv-accent-4: var(--iflyv-geekblue-4);
+  --iflyv-accent-5: var(--iflyv-geekblue-5);
+  --iflyv-accent-6: var(--iflyv-geekblue-6);
+  --iflyv-accent-7: var(--iflyv-geekblue-7);
+  --iflyv-accent-8: var(--iflyv-geekblue-8);
+  --iflyv-accent-9: var(--iflyv-geekblue-9);
+  --iflyv-accent-10: var(--iflyv-geekblue-10);
+
+  /* ==================== 圆角 Corner Radius ==================== */
+  /* 最小圆角 - 用于小型元素 */
+  --iflyv-radius-min: 4px;
+  /* 小模块圆角 - 默认组件圆角尺寸 */
+  --iflyv-radius-smallmodule: 8px;
+  /* 大模块圆角 - 用于较大的模块 */
+  --iflyv-radius-largemodule: 10px;
+  /* 页面级圆角 - 用于页面级容器 */
+  --iflyv-radius-page: 12px;
+  /* 全圆角 - 用于圆形或胶囊按钮 */
+  --iflyv-radius-full: 999px;
+
+  /* ==================== 间距 Spacing ==================== */
+  /* 最小间距 */
+  --iflyv-spacing-1: 4px;
+  /* 如模块内元素间距 */
+  --iflyv-spacing-2: 8px;
+  /* 如按钮间距 */
+  --iflyv-spacing-3: 12px;
+  /* 如卡片常规间距 */
+  --iflyv-spacing-4: 16px;
+  /* 如小模块垂直间距 */
+  --iflyv-spacing-5: 20px;
+  /* 如表单垂直间距（预留负反馈空间） */
+  --iflyv-spacing-6: 24px;
+  /* 如大模块垂直间距 */
+  --iflyv-spacing-7: 32px;
+  /* 如页面级区域间距 */
+  --iflyv-spacing-8: 40px;
+
+  /* ==================== 遮罩模糊 Mask Blur ==================== */
+  --iflyv-mask-blur: 4px;
+}
+
+/* ======================================================================== */
+/* ===================== 第二层：语义化主题色 ============================= */
+/* ======================================================================== */
+
+:root, [data-theme="light"] {
+  /* ==================== 组件桥接变量 ==================== */
+  --iflyv-input-focus-border: var(--iflyv-gray-5);
+  --iflyv-input-focus-ring: var(--iflyv-gray-1);
+  --iflyv-input-hover-border: var(--iflyv-gray-2);
+  --iflyv-tabs-active-deco-start: var(--iflyv-accent-4);
+  --iflyv-tabs-active-deco-end: var(--iflyv-accent-3);
+  --iflyv-avatar-default-bg: var(--iflyv-accent-3);
+
+  /* ==================== 主题色 Brand ==================== */
+  /* 主题色常规 - 基于 accent-6（默认 GeekBlue） */
+  --iflyv-brand-primary: var(--iflyv-accent-6);
+  /* 主题色文字 - 亮色同 primary，暗色提亮一级以保证可读性 */
+  --iflyv-brand-text: var(--iflyv-brand-primary);
+  /* 主题色悬浮 - 基于 accent-5 */
+  --iflyv-brand-hover: var(--iflyv-accent-5);
+  /* 主题色点击 - 基于 accent-7 */
+  --iflyv-brand-pressed: var(--iflyv-accent-7);
+  /* 主题色背景 - 基于 accent-1 */
+  --iflyv-brand-bg: var(--iflyv-accent-1);
+
+  /* ==================== 成功色 Success ==================== */
+  /* 常规 - 基于 green-6 */
+  --iflyv-success-primary: var(--iflyv-green-6);
+  /* 悬浮 - 基于 green-5 */
+  --iflyv-success-hover: var(--iflyv-green-5);
+  /* 点击 - 基于 green-7 */
+  --iflyv-success-pressed: var(--iflyv-green-7);
+  /* 背景 - 基于 green-1 */
+  --iflyv-success-bg: var(--iflyv-green-1);
+
+  /* ==================== 危险色 Danger ==================== */
+  /* 常规 - 基于 red-6 */
+  --iflyv-danger-primary: var(--iflyv-red-6);
+  /* 悬浮 - 基于 red-5 */
+  --iflyv-danger-hover: var(--iflyv-red-5);
+  /* 点击 - 基于 red-7 */
+  --iflyv-danger-pressed: var(--iflyv-red-7);
+  /* 背景 - 基于 red-1 */
+  --iflyv-danger-bg: var(--iflyv-red-1);
+
+  /* ==================== 警告色 Warning ==================== */
+  /* 常规 - 基于 orange-6 */
+  --iflyv-warning-primary: var(--iflyv-orange-6);
+  /* 悬浮 - 基于 orange-5 */
+  --iflyv-warning-hover: var(--iflyv-orange-5);
+  /* 点击 - 基于 orange-7 */
+  --iflyv-warning-pressed: var(--iflyv-orange-7);
+  /* 背景 - 基于 orange-1 */
+  --iflyv-warning-bg: var(--iflyv-orange-1);
+
+  /* ==================== 信息色 Info ==================== */
+  /* 常规 - 基于 blue-6 */
+  --iflyv-info-primary: var(--iflyv-blue-6);
+  /* 悬浮 - 基于 blue-5 */
+  --iflyv-info-hover: var(--iflyv-blue-5);
+  /* 点击 - 基于 blue-7 */
+  --iflyv-info-pressed: var(--iflyv-blue-7);
+  /* 背景 - 基于 blue-1 */
+  --iflyv-info-bg: var(--iflyv-blue-1);
+
+  /* ==================== 背景色 Background ==================== */
+  /* 页面底板 - 基于 gray-1 */
+  --iflyv-bg-page: var(--iflyv-gray-1);
+  /* 卡片/面板 - 基于 gray-0 */
+  --iflyv-bg-panel: var(--iflyv-gray-0);
+  /* 嵌套区域（表头、填充、禁用态）- 基于 gray-1 */
+  --iflyv-bg-inset: var(--iflyv-gray-1);
+  /* Segment Control 选中块背景 - 亮色 gray-0（白），暗色 gray-3（提亮） */
+  --iflyv-bg-segment-active: var(--iflyv-gray-0);
+  /* 卡片背景 - 基于 gray-1 渐变 */
+  --iflyv-bg-card: linear-gradient(90deg, var(--iflyv-gray-1) 0%, #{$bg-card-gradient-end} 100%);
+
+  /* ==================== 文本色 Text ==================== */
+  /* 强调信息 - 基于 gray-10 */
+  --iflyv-text-1: var(--iflyv-gray-10);
+  /* 次强调信息 - 基于 gray-7 */
+  --iflyv-text-2: var(--iflyv-gray-7);
+  /* 描述信息、占位符 - 基于 gray-5 */
+  --iflyv-text-3: var(--iflyv-gray-5);
+  /* 禁用置灰 - 基于 gray-3 */
+  --iflyv-text-4: var(--iflyv-gray-3);
+  /* 用于深色背景 - 基于 gray-0 */
+  --iflyv-text-darkbg: var(--iflyv-gray-0);
+
+  /* ==================== 图标色 Icon ==================== */
+  /* 一级 - 基于 gray-10 */
+  --iflyv-icon-1: var(--iflyv-gray-10);
+  /* 二级 - 基于 gray-7 */
+  --iflyv-icon-2: var(--iflyv-gray-7);
+  /* 三级 - 基于 gray-5 */
+  --iflyv-icon-3: var(--iflyv-gray-5);
+  /* 禁用置灰 - 基于 gray-3 */
+  --iflyv-icon-4: var(--iflyv-gray-3);
+  /* 用于深色背景 - 基于 gray-0 */
+  --iflyv-icon-darkbg: var(--iflyv-gray-0);
+
+  /* ==================== 描边色 Border ==================== */
+  /* 轻量 - 基于 gray-10 0.06，用于组件内部分割、extra-light 场景 */
+  --iflyv-border-light: rgba(21, 21, 21, 0.06);
+  --iflyv-border-light: color-mix(in srgb, var(--iflyv-gray-10) 6%, transparent);
+  /* 常规 - 基于 gray-10 0.1 */
+  --iflyv-border-primary: #{$border-primary-fallback}; /* 降级方案 */
+  --iflyv-border-primary: color-mix(in srgb, var(--iflyv-gray-10) 10%, transparent);
+  /* 加重 - 基于 gray-10 0.2，用于 hover、强调边框 */
+  --iflyv-border-dark: rgba(21, 21, 21, 0.2);
+  --iflyv-border-dark: color-mix(in srgb, var(--iflyv-gray-10) 20%, transparent);
+  /* 用于深色背景 - 基于 gray-0 0.1 */
+  --iflyv-border-darkbg: #{$border-darkbg-fallback}; /* 降级方案 */
+  --iflyv-border-darkbg: color-mix(in srgb, var(--iflyv-gray-0) 10%, transparent);
+
+  /* ==================== 遮罩色 Mask ==================== */
+  /* 常规 - 基于 gray-10 0.6 */
+  --iflyv-mask-primary: #{$mask-primary-fallback}; /* 降级方案 */
+  --iflyv-mask-primary: color-mix(in srgb, var(--iflyv-gray-10) 60%, transparent);
+  /* 用于深色背景 - 基于 gray-0 0.6 */
+  --iflyv-mask-darkbg: #{$mask-darkbg-fallback}; /* 降级方案 */
+  --iflyv-mask-darkbg: color-mix(in srgb, var(--iflyv-gray-0) 60%, transparent);
+
+  /* ==================== 滚动条色 Scroller ==================== */
+  /* 常规 - 基于 gray-10 0.1 */
+  --iflyv-scroller-primary: #{$scroller-primary-fallback}; /* 降级方案 */
+  --iflyv-scroller-primary: color-mix(in srgb, var(--iflyv-gray-10) 10%, transparent);
+  /* 悬浮 - 基于 gray-10 0.3 */
+  --iflyv-scroller-hover: #{$scroller-hover-fallback}; /* 降级方案 */
+  --iflyv-scroller-hover: color-mix(in srgb, var(--iflyv-gray-10) 30%, transparent);
+
+  /* ==================== 图标背景色 Icon Background ==================== */
+  /* 品牌/默认类 - 基于 accent-1 */
+  --iflyv-icon-bg-brand: var(--iflyv-accent-1);
+  /* 成功/完成类 - 基于 green-1 */
+  --iflyv-icon-bg-success: var(--iflyv-green-1);
+  /* 待处理/警告类 - 基于 orange-1 */
+  --iflyv-icon-bg-warning: var(--iflyv-orange-1);
+  /* 异常/错误类 - 基于 red-1 */
+  --iflyv-icon-bg-danger: var(--iflyv-red-1);
+  /* 信息/中性类 - 基于 blue-1 */
+  --iflyv-icon-bg-info: var(--iflyv-blue-1);
+
+  /* ==================== Message 描边色 Message Border ==================== */
+  /* 成功 - 基于 green-3 */
+  --iflyv-message-border-success: var(--iflyv-green-3);
+  /* 危险 - 基于 red-3 */
+  --iflyv-message-border-danger: var(--iflyv-red-3);
+  /* 警告 - 基于 orange-3 */
+  --iflyv-message-border-warning: var(--iflyv-orange-3);
+  /* 信息 - 基于 blue-3 */
+  --iflyv-message-border-info: var(--iflyv-blue-3);
+
+  /* ==================== 阴影 Shadow ==================== */
+  /* 悬浮阴影 - 突出展示，如下拉菜单（悬浮态） */
+  --iflyv-shadow-hover: 0px 6px 8px 0px #{$shadow-hover-color};
+  /* 相关元素阴影 - 与页面元素关联，如下拉菜单、tooltip */
+  --iflyv-shadow-related: 0px 6px 32px 4px #{$shadow-related-color};
+  /* 独立元素阴影 - 相对独立，如侧边抽屉、通知 */
+  --iflyv-shadow-independent: 0px 12px 48px 8px #{$shadow-independent-color};
+
+  /* ==================== 资源路径 Resource Paths ==================== */
+  /* Loading 图片路径 */
+  --iflyv-loading-path: '#{$loading-path}';
+}

@@ -1,0 +1,73 @@
+/* ======================================================================== */
+/* ========================= Dialog 样式覆盖 ============================== */
+/* ======================================================================== */
+
+.el-overlay-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.el-dialog {
+  margin: 0;
+  padding: 12px 24px 20px;
+  border-radius: var(--iflyv-radius-page);
+
+  /* ==================== 标题栏 Header ==================== */
+  .el-dialog__header {
+    padding: 0 0 12px;
+    margin-bottom: 8px;
+    margin-inline-end: 0;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .el-dialog__title {
+    font-size: var(--iflyv-font-size-16);
+    line-height: var(--iflyv-line-height-24);
+    font-weight: 600;
+    color: var(--iflyv-text-1);
+  }
+
+  .el-dialog__headerbtn {
+    top: 12px;
+    inset-inline-end: 24px;
+    width: 24px;
+    height: 24px;
+    color: var(--iflyv-icon-3);
+    &:hover { color: var(--iflyv-icon-2); }
+    .el-dialog__close { visibility: hidden; }
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: currentColor;
+      pointer-events: none;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E") no-repeat center / 16px;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E") no-repeat center / 16px;
+    }
+  }
+
+  /* ==================== 内容区 Body ==================== */
+  .el-dialog__body {
+    padding: 0;
+    color: var(--iflyv-text-2);
+    font-size: var(--iflyv-font-size-14);
+  }
+
+  /* ==================== 底部栏 Footer ==================== */
+  .el-dialog__footer {
+    padding: 20px 0 0;
+    border-top: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    .el-button + .el-button { margin-inline-start: 0; }
+  }
+}
+
+/* RTL：覆盖 EP 硬编码物理 padding */
+.el-dialog__header.show-close { padding-right: unset; padding-inline-end: calc(var(--el-dialog-padding-primary) + var(--el-message-close-size, 16px)); }
+
+.el-dialog__footer { text-align: end; }

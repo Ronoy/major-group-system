@@ -1,0 +1,54 @@
+/* ======================================================================== */
+/* ========================= Select 样式覆盖 =============================== */
+/* ======================================================================== */
+
+/* Select / Cascader 箭头 → Lucide ChevronDown */
+.el-select__caret:not(.is-show-close):not(.el-select__clear),
+.el-cascader .icon-arrow-down {
+  position: relative;
+  color: var(--iflyv-icon-3);
+  svg { visibility: hidden; }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+    background-color: currentColor;
+    pointer-events: none;
+  }
+}
+.el-select__wrapper.is-disabled .el-select__caret:not(.is-show-close) { color: var(--el-disabled-text-color); }
+.el-cascader.is-disabled .icon-arrow-down { color: var(--el-disabled-text-color); }
+
+/* 下拉菜单选项样式 */
+.el-select-dropdown__list { padding: var(--iflyv-spacing-1); }
+.el-select-dropdown__item {
+  border-radius: var(--iflyv-radius-min);
+  height: 36px;
+  line-height: 36px;
+  color: var(--iflyv-text-1);
+  &.is-selected { font-weight: 400; color: var(--iflyv-brand-text); }
+}
+/* 分组标题颜色 */
+.el-select-group__title { color: var(--iflyv-text-3); line-height: 20px; padding: 12px 20px 8px; }
+// 多选对勾 → Lucide Check
+/* 字号 rem 化：覆盖 EP 尺寸变体 baked-in px */
+.el-select { font-size: var(--iflyv-font-size-14); }
+.el-select__wrapper { font-size: var(--iflyv-font-size-14); }
+.el-select--large .el-select__wrapper { font-size: var(--iflyv-font-size-14); }
+.el-select--small .el-select__wrapper { font-size: var(--iflyv-font-size-12); }
+.el-select-group__title { font-size: var(--iflyv-font-size-12); }
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.is-selected::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* RTL：覆盖 EP 硬编码物理 margin/padding + 定位 */
+.el-select--large .el-select__selection.is-near { margin-left: unset; margin-inline-start: -8px; }
+.el-select--small .el-select__selection.is-near { margin-left: unset; margin-inline-start: -6px; }
+.el-select-group .el-select-dropdown__item { padding-left: unset; padding-inline-start: 20px; }
+.el-select-dropdown.is-multiple .el-select-dropdown__item.is-selected::after { right: unset; inset-inline-end: 20px; }
+
+.el-select__wrapper { text-align: start; }

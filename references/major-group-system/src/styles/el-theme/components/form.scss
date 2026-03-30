@@ -1,0 +1,30 @@
+/* ======================================================================== */
+/* ========================== Form 样式覆盖 =============================== */
+/* ======================================================================== */
+
+.el-form-item--label-top .el-form-item__label {
+  margin-bottom: 6px;
+  line-height: var(--iflyv-line-height-22);
+}
+
+.el-form-item { margin-bottom: 16px; &:last-child { margin-bottom: 0; } }
+.el-form-item__label { height: 32px; line-height: 32px; }
+.el-form-item__content { min-height: 32px; gap: 12px; .el-button + .el-button { margin-inline-start: 0; } }
+
+/* 字号 rem 化：覆盖 EP 尺寸变体 baked-in px */
+.el-form-item { font-size: var(--iflyv-font-size-14); }
+.el-form-item--small { font-size: var(--iflyv-font-size-12); }
+.el-form-item--large { font-size: var(--iflyv-font-size-14); }
+.el-form-item__error { font-size: var(--iflyv-font-size-12); }
+
+/* RTL：覆盖 EP 硬编码物理 margin */
+.el-form--inline .el-form-item { margin-right: unset; margin-inline-end: 32px; }
+.el-form-item__error--inline { margin-left: unset; margin-inline-start: 10px; }
+.el-form-item.is-required:not(.is-no-asterisk).asterisk-left > .el-form-item__label:before,
+.el-form-item.is-required:not(.is-no-asterisk).asterisk-left > .el-form-item__label-wrap > .el-form-item__label:before {
+  margin-right: unset; margin-inline-end: 4px;
+}
+.el-form-item.is-required:not(.is-no-asterisk).asterisk-right > .el-form-item__label:after,
+.el-form-item.is-required:not(.is-no-asterisk).asterisk-right > .el-form-item__label-wrap > .el-form-item__label:after {
+  margin-left: unset; margin-inline-start: 4px;
+}

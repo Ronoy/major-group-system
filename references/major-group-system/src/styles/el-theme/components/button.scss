@@ -1,0 +1,265 @@
+/* ======================================================================== */
+/* ========================= Button 样式覆盖 ============================== */
+/* ======================================================================== */
+
+.el-button {
+  border-radius: var(--iflyv-radius-smallmodule);
+  font: var(--iflyv-font-body-sub);
+  --el-button-text-color: var(--iflyv-text-1);
+
+  /* 状态切换过渡 */
+  transition: background-color var(--iflyv-duration-fast) var(--iflyv-ease-default),
+              border-color var(--iflyv-duration-fast) var(--iflyv-ease-default),
+              color var(--iflyv-duration-fast) var(--iflyv-ease-default),
+              transform var(--iflyv-duration-fast) var(--iflyv-ease-default);
+
+  &:active:not(.is-disabled) {
+    transform: translateY(1px);
+  }
+
+  /* 鼠标点击不显示外框；键盘 Tab 聚焦显示外框 */
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--iflyv-brand-primary);
+    outline-offset: 1px;
+  }
+  &--danger:focus-visible {
+    outline-color: var(--iflyv-danger-primary);
+  }
+
+  /* 图标尺寸与间距 */
+  .el-icon {
+    font-size: var(--iflyv-font-size-16);
+
+    & + span {
+      margin-inline-start: 6px;
+    }
+  }
+
+  /* ==================== 默认按钮交互态 ==================== */
+  /* hover：去背景色，文字+边框统一为品牌色 */
+  --el-button-hover-text-color: var(--iflyv-brand-text);
+  --el-button-hover-bg-color: var(--iflyv-bg-panel);
+  --el-button-hover-border-color: var(--iflyv-brand-primary);
+  /* active：文字+边框统一深一级 */
+  --el-button-active-text-color: var(--iflyv-brand-pressed);
+  --el-button-active-bg-color: var(--iflyv-bg-panel);
+  --el-button-active-border-color: var(--iflyv-brand-pressed);
+
+  /* ==================== 默认按钮禁用/加载态 ==================== */
+  /* EP 默认按钮无 --default 类名，规则写在基类上，由 Primary/Danger 覆盖 */
+  &.is-disabled,
+  &.is-disabled:hover,
+  &.is-loading,
+  &.is-loading:hover {
+    --el-button-disabled-text-color: var(--iflyv-text-2);
+    --el-button-disabled-bg-color: var(--iflyv-bg-panel);
+    --el-button-disabled-border-color: var(--iflyv-border-primary);
+    opacity: 0.6;
+  }
+
+  /* ==================== 主按钮 Primary ==================== */
+  &--primary {
+    background-color: var(--iflyv-brand-primary);
+    border-color: var(--iflyv-brand-primary);
+    color: var(--iflyv-text-darkbg);
+
+    &:not(.is-text):not(.is-link):focus:not(:hover) {
+      background-color: var(--iflyv-brand-primary);
+      border-color: var(--iflyv-brand-primary);
+      color: var(--iflyv-text-darkbg);
+    }
+
+    &:hover {
+      background-color: var(--iflyv-brand-hover);
+      border-color: var(--iflyv-brand-hover);
+      color: var(--iflyv-text-darkbg);
+    }
+
+    &:active {
+      background-color: var(--iflyv-brand-pressed);
+      border-color: var(--iflyv-brand-pressed);
+    }
+
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-loading,
+    &.is-loading:hover {
+      --el-button-disabled-text-color: var(--iflyv-text-darkbg);
+      --el-button-disabled-bg-color: var(--iflyv-brand-primary);
+      --el-button-disabled-border-color: var(--iflyv-brand-primary);
+      opacity: 0.6;
+    }
+  }
+
+  /* ==================== 危险按钮 Danger ==================== */
+  &--danger {
+    background-color: var(--iflyv-danger-primary);
+    border-color: var(--iflyv-danger-primary);
+    color: var(--iflyv-text-darkbg);
+
+    &:not(.is-text):not(.is-link):focus:not(:hover) {
+      background-color: var(--iflyv-danger-primary);
+      border-color: var(--iflyv-danger-primary);
+      color: var(--iflyv-text-darkbg);
+    }
+
+    &:hover {
+      background-color: var(--iflyv-danger-hover);
+      border-color: var(--iflyv-danger-hover);
+      color: var(--iflyv-text-darkbg);
+    }
+
+    &:active {
+      background-color: var(--iflyv-danger-pressed);
+      border-color: var(--iflyv-danger-pressed);
+    }
+
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-loading,
+    &.is-loading:hover {
+      --el-button-disabled-text-color: var(--iflyv-text-darkbg);
+      --el-button-disabled-bg-color: var(--iflyv-danger-primary);
+      --el-button-disabled-border-color: var(--iflyv-danger-primary);
+      opacity: 0.6;
+    }
+  }
+
+  /* ==================== Warning / Info / Success 文字色 ==================== */
+  &--warning,
+  &--info,
+  &--success {
+    color: var(--iflyv-text-darkbg);
+
+    &:focus:not(:hover) { color: var(--iflyv-text-darkbg); }
+    &:hover { color: var(--iflyv-text-darkbg); }
+
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-loading,
+    &.is-loading:hover {
+      --el-button-disabled-text-color: var(--iflyv-text-darkbg);
+      opacity: 0.6;
+    }
+  }
+
+  /* ==================== 文字按钮 Text ==================== */
+  &.is-text:not(.is-disabled) {
+    &:not([class*="--"]) {
+      &:hover, &:active { background-color: var(--iflyv-brand-bg); --el-button-text-color: var(--iflyv-brand-text); color: var(--iflyv-brand-text); }
+    }
+
+    &.el-button--primary {
+      --el-button-text-color: var(--iflyv-brand-text);
+      color: var(--iflyv-brand-text);
+      &:hover, &:active { background-color: var(--iflyv-brand-bg); }
+    }
+
+    &.el-button--danger {
+      color: var(--iflyv-danger-primary);
+      &:hover, &:active { background-color: var(--iflyv-danger-bg); }
+    }
+  }
+
+  /* 文字按钮禁用态：保持常态色 + opacity */
+  &.is-text.is-disabled,
+  &.is-text.is-disabled:hover {
+    color: var(--iflyv-text-2);
+    opacity: 0.6;
+  }
+  &--primary.is-text.is-disabled,
+  &--primary.is-text.is-disabled:hover {
+    color: var(--iflyv-brand-text);
+    opacity: 0.6;
+  }
+  &--danger.is-text.is-disabled,
+  &--danger.is-text.is-disabled:hover {
+    color: var(--iflyv-danger-primary);
+    opacity: 0.6;
+  }
+
+  /* ==================== 链接按钮 Link ==================== */
+  &.is-link:not(.is-disabled) {
+    &:not([class*="--"]) {
+      &:hover, &:active { --el-button-text-color: var(--iflyv-brand-text); color: var(--iflyv-brand-text); }
+    }
+
+    &.el-button--primary {
+      --el-button-text-color: var(--iflyv-brand-text);
+      color: var(--iflyv-brand-text);
+      &:hover, &:active { color: var(--iflyv-brand-hover); }
+    }
+
+    &.el-button--danger {
+      color: var(--iflyv-danger-primary);
+      &:hover, &:active { color: var(--iflyv-danger-hover); }
+    }
+  }
+
+  /* 链接按钮禁用态：保持常态色 + opacity */
+  &.is-link.is-disabled,
+  &.is-link.is-disabled:hover {
+    color: var(--iflyv-text-2);
+    opacity: 0.6;
+  }
+  &--primary.is-link.is-disabled,
+  &--primary.is-link.is-disabled:hover {
+    color: var(--iflyv-brand-text);
+    opacity: 0.6;
+  }
+  &--danger.is-link.is-disabled,
+  &--danger.is-link.is-disabled:hover {
+    color: var(--iflyv-danger-primary);
+    opacity: 0.6;
+  }
+
+  /* ==================== 加载态遮罩移除（已用 opacity 替代） ==================== */
+  &.is-loading::before {
+    display: none;
+  }
+
+  /* ==================== 加载图标替换 Loading ==================== */
+  &.is-loading .el-icon {
+    svg {
+      visibility: hidden;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a9 9 0 1 1-6.219-8.56'/%3E%3C/svg%3E") no-repeat center / contain;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a9 9 0 1 1-6.219-8.56'/%3E%3C/svg%3E") no-repeat center / contain;
+      background-color: currentColor;
+      pointer-events: none;
+    }
+  }
+
+}
+
+/* ==================== 图标方形按钮 Icon-only Square ==================== */
+/* 使用方式：<el-button class="btn-icon-square">，禁止使用 circle 属性 */
+.btn-icon-square {
+  width: var(--el-component-size);
+  height: var(--el-component-size);
+  padding: 0;
+  border-radius: var(--iflyv-radius-smallmodule);
+}
+
+.el-button:not(.is-circle):not(.is-link):not(.el-button--text):not(.el-transfer__button):not(.btn-icon-square) {
+  min-width: 80px;
+  &.el-button--large { min-width: 88px; }
+  &.el-button--small { min-width: 72px; }
+}
+
+/* RTL：覆盖 EP 硬编码物理 margin */
+.el-button + .el-button { margin-left: unset; margin-inline-start: 12px; }
+.el-button--large [class*=el-icon] + span { margin-left: unset; margin-inline-start: 8px; }
+.el-button--small [class*=el-icon] + span { margin-left: unset; margin-inline-start: 4px; }
+.el-button__text--expand { margin-right: unset; margin-inline-end: -.3em; }
+.el-button__link--expand { margin-right: unset; margin-inline-end: -.3em; }
+.el-button-group--horizontal > .el-button:not(:last-child) { margin-right: unset; margin-inline-end: -1px; }
+.el-button-group--horizontal > .el-button { float: inline-start; }

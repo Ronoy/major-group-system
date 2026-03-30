@@ -1,0 +1,10 @@
+/* fif-style-root - 基础CSS变量定义 */
+@use './css/root.scss';
+@use './css/root-dark.scss';
+@use './css/brands.scss';
+@use './css/animation.scss';
+
+body {
+  font: var(--iflyv-font-body-primary);
+  color: var(--iflyv-text-1);
+}

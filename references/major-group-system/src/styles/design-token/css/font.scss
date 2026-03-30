@@ -1,0 +1,150 @@
+/* ==================== 字体定义 Font Face ==================== */
+@font-face {
+  font-family: "douyinNum";
+  src: url("../font/douyin_num.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ======================================================================== */
+/* ========================= 字体系统 Font System ========================= */
+/* ======================================================================== */
+
+/* ==================== 第一层：基础字体规范 ==================== */
+
+/* 字体家族 Font Family */
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+'Noto Sans', 'Noto Sans Arabic', 'Noto Sans SC',
+sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+'Noto Color Emoji';
+$font-family-number: "douyinNum";
+
+/* 字体大小 Font Size */
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-22: 22px;
+$font-size-28: 28px;
+$font-size-40: 40px;
+
+/* 行高 Line Height */
+$line-height-18: 18px;
+$line-height-20: 20px;
+$line-height-24: 24px;
+$line-height-28: 28px;
+$line-height-32: 32px;
+$line-height-36: 36px;
+$line-height-42: 42px;
+$line-height-44: 44px;
+$line-height-56: 56px;
+$line-height-60: 60px;
+
+/* 字重 Font Weight */
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+/* ==================== 第二层：语义化字体应用 ==================== */
+
+:root {
+  /* 字体家族 Font Family */
+  --iflyv-font-family-base: #{$font-family-base};
+  --iflyv-font-family-number: #{$font-family-number};
+
+  /* 字体大小 Font Size */
+  --iflyv-font-size-12: 0.75rem;
+  --iflyv-font-size-14: 0.875rem;
+  --iflyv-font-size-16: 1rem;
+  --iflyv-font-size-18: 1.125rem;
+  --iflyv-font-size-22: 1.375rem;
+  --iflyv-font-size-28: 1.75rem;
+  --iflyv-font-size-40: 2.5rem;
+
+  /* 行高 Line Height */
+  --iflyv-line-height-18: 1.125rem;
+  --iflyv-line-height-20: 1.25rem;
+  --iflyv-line-height-22: 1.375rem;
+  --iflyv-line-height-24: 1.5rem;
+  --iflyv-line-height-28: 1.75rem;
+  --iflyv-line-height-32: 2rem;
+  --iflyv-line-height-36: 2.25rem;
+  --iflyv-line-height-42: 2.625rem;
+  --iflyv-line-height-44: 2.75rem;
+  --iflyv-line-height-56: 3.5rem;
+  --iflyv-line-height-60: 3.75rem;
+
+  /* 字重 Font Weight */
+  --iflyv-font-weight-regular: #{$font-weight-regular};
+  --iflyv-font-weight-medium: #{$font-weight-medium};
+  --iflyv-font-weight-semibold: #{$font-weight-semibold};
+  --iflyv-font-weight-bold: #{$font-weight-bold};
+
+  /* 标题类型 Title */
+
+  /* 强调标题 - Title-Emphasized - 特别强调使用 */
+  --iflyv-font-title-emphasized: #{$font-weight-semibold} 1.75rem / 2.625rem #{$font-family-base};
+  --iflyv-font-title-emphasized-multiline: #{$font-weight-semibold} 1.75rem / 3.5rem #{$font-family-base};
+
+  /* 父标题 - Title-Superior - 多级标题的父标题 */
+  --iflyv-font-title-superior: #{$font-weight-semibold} 1.375rem / 2rem #{$font-family-base};
+  --iflyv-font-title-superior-multiline: #{$font-weight-semibold} 1.375rem / 2.75rem #{$font-family-base};
+
+  /* 常规标题 - Title-Primary - 绝大多数标题 */
+  --iflyv-font-title-primary: #{$font-weight-semibold} 1.125rem / 1.75rem #{$font-family-base};
+  --iflyv-font-title-primary-multiline: #{$font-weight-semibold} 1.125rem / 2.25rem #{$font-family-base};
+
+  /* 正文类型 Body */
+
+  /* 常规正文 - Body-Primary - 绝大多数主要文本信息 */
+  --iflyv-font-body-primary: #{$font-weight-regular} 1rem / 1.5rem #{$font-family-base};
+  --iflyv-font-body-primary-multiline: #{$font-weight-regular} 1rem / 2rem #{$font-family-base};
+
+  /* 次要正文 - Body-Sub - 次要正文或文字按钮 */
+  --iflyv-font-body-sub: #{$font-weight-regular} 0.875rem / 1.25rem #{$font-family-base};
+  --iflyv-font-body-sub-multiline: #{$font-weight-regular} 0.875rem / 1.75rem #{$font-family-base};
+
+  /* 辅助信息 - Body-Min - 最小可识别字号 */
+  --iflyv-font-body-min: #{$font-weight-regular} 0.75rem / 1.125rem #{$font-family-base};
+  --iflyv-font-body-min-multiline: #{$font-weight-regular} 0.75rem / 1.5rem #{$font-family-base};
+
+  /* 标签类型 Label */
+
+  /* 大标签 - Label-Large - 用于大标签内的文字 */
+  --iflyv-font-label-large: #{$font-weight-regular} 0.875rem / 1.25rem #{$font-family-base};
+  --iflyv-font-label-large-multiline: #{$font-weight-regular} 0.875rem / 1.75rem #{$font-family-base};
+
+  /* 常规标签 - Label-Primary - 绝大多数标签内的文字 */
+  --iflyv-font-label-primary: #{$font-weight-regular} 0.75rem / 1.125rem #{$font-family-base};
+  --iflyv-font-label-primary-multiline: #{$font-weight-regular} 0.75rem / 1.5rem #{$font-family-base};
+
+  /* 数字展示类型 Number Display */
+
+  /* 展示型数字 - Number-Display - 使用抖音美好体 */
+  --iflyv-font-number-display-l: #{$font-weight-bold} 2.5rem / 3.75rem #{$font-family-number};
+  --iflyv-font-number-display: #{$font-weight-bold} 1.75rem / 2.625rem #{$font-family-number};
+  --iflyv-font-number-display-s: #{$font-weight-bold} 1.375rem / 2rem #{$font-family-number};
+}
+
+/* ==================== 字号档位 Font Size Levels ==================== */
+/* 通过 html font-size 控制全局 rem 缩放，间距/圆角/组件尺寸保持 px 不变 */
+/* 数值来源：demos/font-size-levels-compare.html remRootSizes */
+
+html {
+  font-size: 16px; /* md 默认值，显式声明确保一致 */
+}
+
+html[data-font-size="sm"] {
+  font-size: 14.5px;
+}
+
+/* md = 16px（默认），无需额外规则 */
+
+html[data-font-size="lg"] {
+  font-size: 19px;
+}
+
+html[data-font-size="xl"] {
+  font-size: 22px;
+}

@@ -1,0 +1,142 @@
+/* ======================================================================== */
+/* ========================== Table 样式覆盖 ============================== */
+/* ======================================================================== */
+/* 注意：不使用 stripe（斑马纹），通过 hover 行高亮区分行 */
+
+.el-table {
+  background-color: var(--iflyv-bg-panel);
+  border-radius: var(--iflyv-radius-smallmodule);
+  border: 1px solid var(--iflyv-border-primary);
+  box-shadow: none;
+
+  /* ==================== 表头 Header ==================== */
+  .el-table__header-wrapper {
+    th.el-table__cell {
+      background-color: var(--iflyv-bg-inset);
+      font-size: var(--iflyv-font-size-14);
+      font-weight: var(--iflyv-font-weight-semibold);
+      color: var(--iflyv-text-1);
+    }
+  }
+
+  /* ==================== 行样式 Row ==================== */
+  .el-table__row {
+    td.el-table__cell {
+      border-bottom-color: var(--iflyv-border-primary);
+      color: var(--iflyv-text-2);
+    }
+
+    &:hover > td.el-table__cell {
+      background-color: var(--iflyv-bg-inset);
+    }
+
+    &:last-child > td.el-table__cell {
+      border-bottom: none;
+    }
+  }
+
+  .cell {
+    padding: 0 16px;
+    line-height: var(--iflyv-line-height-24);
+  }
+
+  /* ==================== 选中行 Selected Row ==================== */
+  .el-table__body tr.current-row > td.el-table__cell {
+    background-color: var(--iflyv-bg-inset);
+  }
+
+  /* 统一：去除 EP 伪元素外框，由外层 border + border-radius 提供圆角外框 */
+  &::before, &::after { display: none; }
+  .el-table__inner-wrapper::before,
+  .el-table__inner-wrapper::after { display: none; }
+  overflow: hidden;
+
+  /* border 模式：更高优先级覆盖 EP .el-table--border 伪元素 + 末列去重 */
+  &.el-table--border {
+    &::before, &::after { display: none; }
+    .el-table__inner-wrapper::after { display: none; }
+    .el-table__border-left-patch { display: none; }
+
+    th.el-table__cell:last-of-type,
+    td.el-table__cell:last-of-type {
+      border-inline-end: none;
+    }
+  }
+}
+
+/* ==================== 排序箭头：圆润化 ==================== */
+/* EP 默认用 border 画尖三角，替换为 Lucide ChevronUp/Down 风格圆角箭头 */
+.el-table .sort-caret {
+  border: none;
+  width: 10px;
+  height: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.ascending {
+    top: 0;
+    background-color: var(--iflyv-text-4);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'%3E%3Cpath d='M4.134.5a1 1 0 0 1 1.732 0L8.5 4.25a.75.75 0 0 1-.65.75H2.15a.75.75 0 0 1-.65-.75Z' fill='black'/%3E%3C/svg%3E") no-repeat center / contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'%3E%3Cpath d='M4.134.5a1 1 0 0 1 1.732 0L8.5 4.25a.75.75 0 0 1-.65.75H2.15a.75.75 0 0 1-.65-.75Z' fill='black'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  &.descending {
+    bottom: 2px;
+    background-color: var(--iflyv-text-4);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'%3E%3Cpath d='M5.866 4.5a1 1 0 0 1-1.732 0L1.5.75A.75.75 0 0 1 2.15 0h5.7a.75.75 0 0 1 .65.75Z' fill='black'/%3E%3C/svg%3E") no-repeat center / contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'%3E%3Cpath d='M5.866 4.5a1 1 0 0 1-1.732 0L1.5.75A.75.75 0 0 1 2.15 0h5.7a.75.75 0 0 1 .65.75Z' fill='black'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+}
+
+/* 激活态：高亮为品牌色 */
+.el-table .ascending .sort-caret.ascending {
+  background-color: var(--iflyv-brand-primary);
+}
+
+.el-table .descending .sort-caret.descending {
+  background-color: var(--iflyv-brand-primary);
+}
+
+/* ==================== 操作列约定类名 ==================== */
+/* 使用方式：<el-button class="table-operation" type="text"> */
+
+.table-operation {
+  color: var(--iflyv-text-1);
+  font: var(--iflyv-font-body-sub);
+  padding: 0;
+  height: auto;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  & + .table-operation {
+    margin-inline-start: var(--iflyv-spacing-3);
+  }
+
+  &:hover {
+    color: var(--iflyv-brand-primary);
+  }
+}
+
+/* "更多"下拉：与其他操作文字垂直对齐 */
+.el-dropdown.table-operation {
+  vertical-align: baseline;
+}
+
+.table-operation__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* 危险操作：始终为危险色 */
+.table-operation--danger {
+  color: var(--iflyv-danger-primary);
+
+  &:hover {
+    color: var(--iflyv-danger-hover);
+  }
+}
+
+/* RTL：覆盖 EP 硬编码 text-align */
+.el-table .el-table__cell { text-align: start; }

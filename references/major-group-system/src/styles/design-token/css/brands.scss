@@ -1,0 +1,59 @@
+@use 'root' as *;
+
+/* ======================================================================== */
+/* ==================== 品牌色定义：[data-brand] 覆盖层 ==================== */
+/* ======================================================================== */
+
+/* ==================== school-red (#E0432A) ==================== */
+
+/* 亮色色板：由 @ant-design/colors generate('#E0432A') 生成 */
+$schoolred-1:  #fff4f0;
+$schoolred-2:  #ffdfd4;
+$schoolred-3:  #ffbeab;
+$schoolred-4:  #fa987f;
+$schoolred-5:  #ed6d53;
+$schoolred-6:  #e0432a;
+$schoolred-7:  #ba2a1a;
+$schoolred-8:  #94160d;
+$schoolred-9:  #6e0804;
+$schoolred-10: #470202;
+
+/* 暗色色板：由 generate('#E0432A', { theme:'dark', bg:'#1A1A1A' }) 生成 */
+$dark-schoolred-1:  #2c1918;
+$dark-schoolred-2:  #421e1a;
+$dark-schoolred-3:  #55261f;
+$dark-schoolred-4:  #732c21;
+$dark-schoolred-5:  #9b3524;
+$dark-schoolred-6:  #c23d28;
+$dark-schoolred-7:  #d8654d;
+$dark-schoolred-8:  #ef927a;
+$dark-schoolred-9:  #f8b9a7;
+$dark-schoolred-10: #fadbd0;
+
+/* ---------- 亮色覆盖 ---------- */
+[data-brand="school-red"] {
+  --iflyv-accent-1:  #{$schoolred-1};
+  --iflyv-accent-2:  #{$schoolred-2};
+  --iflyv-accent-3:  #{$schoolred-3};
+  --iflyv-accent-4:  #{$schoolred-4};
+  --iflyv-accent-5:  #{$schoolred-5};
+  --iflyv-accent-6:  #{$schoolred-6};
+  --iflyv-accent-7:  #{$schoolred-7};
+  --iflyv-accent-8:  #{$schoolred-8};
+  --iflyv-accent-9:  #{$schoolred-9};
+  --iflyv-accent-10: #{$schoolred-10};
+}
+
+/* ---------- 暗色覆盖 ---------- */
+[data-theme="dark"][data-brand="school-red"] {
+  --iflyv-accent-1:  #{$dark-schoolred-1};
+  --iflyv-accent-2:  #{$dark-schoolred-2};
+  --iflyv-accent-3:  #{$dark-schoolred-3};
+  --iflyv-accent-4:  #{$dark-schoolred-4};
+  --iflyv-accent-5:  #{$dark-schoolred-5};
+  --iflyv-accent-6:  #{$dark-schoolred-6};
+  --iflyv-accent-7:  #{$dark-schoolred-7};
+  --iflyv-accent-8:  #{$dark-schoolred-8};
+  --iflyv-accent-9:  #{$dark-schoolred-9};
+  --iflyv-accent-10: #{$dark-schoolred-10};
+}

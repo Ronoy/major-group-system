@@ -1,0 +1,67 @@
+/* ======================================================================== */
+/* ======================== Pagination 样式覆盖 ============================ */
+/* ======================================================================== */
+
+/* 字号 rem 化 */
+.el-pagination { font-size: var(--iflyv-font-size-14); }
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .btn-next,
+.el-pager li { font-size: var(--iflyv-font-size-14); }
+
+/* 其他组件微调 */
+.el-pagination { height: var(--el-component-size); }
+.el-pagination .el-input { --el-component-size: 32px; }
+.el-pagination .el-select { --el-component-size: 32px; width: 120px; }
+/* Pagination 快速翻页图标 → Lucide Ellipsis / ChevronsRight / ChevronsLeft */
+.el-pager .btn-quicknext,
+.el-pager .btn-quickprev {
+  position: relative;
+  .el-icon { visibility: hidden; position: absolute; }
+  svg { display: none; }
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    pointer-events: none;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3Ccircle cx='19' cy='12' r='1'/%3E%3Ccircle cx='5' cy='12' r='1'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3Ccircle cx='19' cy='12' r='1'/%3E%3Ccircle cx='5' cy='12' r='1'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+  }
+}
+.el-pager .btn-quicknext:hover::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+}
+/* 当前页码文字色：使用 brand-text（暗色下提亮一级） */
+.el-pagination {
+  --el-pagination-hover-color: var(--iflyv-brand-text);
+}
+.el-pager li.is-active {
+  color: var(--iflyv-brand-text);
+}
+
+.el-pager .btn-quickprev:hover::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+}
+
+/* RTL：覆盖 EP 硬编码物理 margin */
+.el-pagination > .is-first { margin-left: unset !important; margin-inline-start: 0 !important; }
+.el-pagination > .is-last { margin-right: unset !important; margin-inline-end: 0 !important; }
+.el-pagination .btn-prev { margin-left: unset; margin-inline-start: var(--el-pagination-item-gap); }
+.el-pagination__sizes,
+.el-pagination__total { margin-left: unset; margin-inline-start: var(--el-pagination-item-gap); }
+.el-pagination__jump { margin-left: unset; margin-inline-start: var(--el-pagination-item-gap); }
+.el-pagination__goto { margin-right: unset; margin-inline-end: 8px; }
+.el-pagination__classifier { margin-left: unset; margin-inline-start: 8px; }
+.el-pagination.is-background .btn-prev { margin-left: unset; margin-inline-start: var(--el-pagination-item-gap); }
+
+/* RTL：快速翻页 Lucide 箭头方向互换（ChevronsRight ↔ ChevronsLeft） */
+[dir="rtl"] .el-pager .btn-quicknext:hover::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+}
+[dir="rtl"] .el-pager .btn-quickprev:hover::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E") no-repeat center / 0.875rem;
+}
